@@ -1,0 +1,760 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2602811745347732682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2602811745347732685}
+  - component: {fileID: 2602811745347732684}
+  m_Layer: 0
+  m_Name: TileLookUpObj 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2602811745347732685
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602811745347732682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 101.91455, y: -9.085648, z: -27.733559}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2602811745347732684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602811745347732682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99694ea0756de2c4786b6fb0d295bb7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Tiles:
+  - ID: 0
+    Obj: {fileID: 4274339011326802016, guid: 1c4c6bfbcf819eb459beb15085706801, type: 3}
+    name: ClearPlayer
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 1
+    Obj: {fileID: 2265878709451652340, guid: d05672e2ba88f524784d4def3f895bfb, type: 3}
+    name: BluePlayer
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 2
+    Obj: {fileID: 3208935811734203763, guid: 126ffb3069f2dd54b8903ab14dfa76b2, type: 3}
+    name: RedPlayer
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 3
+    Obj: {fileID: 2543042341592312801, guid: 1fe367186075e994db0b06152ac72dd0, type: 3}
+    name: GreenPlayer
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 4
+    Obj: {fileID: 1876806010737217493, guid: 36488e35ba443794e96a2f937889db1e, type: 3}
+    name: YellowPlayer
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 5
+    Obj: {fileID: 6407498846049909098, guid: 56f378bcf64b9ae4fba10f8bb1e3d2fc, type: 3}
+    name: PurplePlayer
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 6
+    Obj: {fileID: 6446549473453911066, guid: 0b388d4ae9bce0545bd70f7b01afe8ac, type: 3}
+    name: Forest 1
+    MoveCost: 2
+    Def: 1
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 7
+    Obj: {fileID: 4393150034283786187, guid: 51baa6e0b6627504ea2a0e7b43a04014, type: 3}
+    name: Forest 2
+    MoveCost: 2
+    Def: 1
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 8
+    Obj: {fileID: 5026067265666063859, guid: 6ed6abae575e7d04e91e90b7d4cb300d, type: 3}
+    name: Forest 3
+    MoveCost: 2
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 9
+    Obj: {fileID: 1315634365018576213, guid: afeb2a758bfbc5d4fa456f7251db0dfc, type: 3}
+    name: Plains 1
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 10
+    Obj: {fileID: 148833099914239475, guid: 6f930b054f1795949a18a5362d0ba926, type: 3}
+    name: Plains 2
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 11
+    Obj: {fileID: 4424604621341449093, guid: e858701642d9afd49905f04427855d6a, type: 3}
+    name: Plains 3
+    MoveCost: 1
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 12
+    Obj: {fileID: 8928240980427094140, guid: f170e45b823b6d54b89346005b32c01c, type: 3}
+    name: Rock 1
+    MoveCost: 2
+    Def: 2
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 13
+    Obj: {fileID: 876040686440786669, guid: 6ad697e91aae88f46b3be9c967b1d88b, type: 3}
+    name: Rock 2
+    MoveCost: 2
+    Def: 2
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 14
+    Obj: {fileID: 4176781837771024254, guid: cd898e61eed962b438e26a0039facee3, type: 3}
+    name: Rock 3
+    MoveCost: 2
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 15
+    Obj: {fileID: 921773972626863481, guid: 95597efad46492e498f79c0b3eb8a02f, type: 3}
+    name: Grass 1
+    MoveCost: 2
+    Def: 2
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 16
+    Obj: {fileID: 1753079359838646927, guid: 3470c6d1d073ed040b9bcc7c54cd6ec7, type: 3}
+    name: Grass 2
+    MoveCost: 2
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 17
+    Obj: {fileID: 1999435705844327206, guid: ed88eb02d0ce0f74ea51b533f6e69f0f, type: 3}
+    name: Grass 3
+    MoveCost: 2
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 18
+    Obj: {fileID: 5824491308480735922, guid: df3f49b85a4d03e4f8f41e432e759b76, type: 3}
+    name: Stone-Wall 1
+    MoveCost: 100
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 19
+    Obj: {fileID: 1864366611765944565, guid: 78f2c5e11d083f54ab1d9a320180fe4a, type: 3}
+    name: Stone-Wall 2
+    MoveCost: 100
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 20
+    Obj: {fileID: 2273439287124634761, guid: 6b745d3ff0d00264eae58a2a26aab1cb, type: 3}
+    name: Stone-Wall 3
+    MoveCost: 100
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 21
+    Obj: {fileID: 4633041152448910274, guid: 45809584f332c974f87aa9aa289530b1, type: 3}
+    name: Bush 1
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 22
+    Obj: {fileID: 6052423776798484716, guid: b68e46b60d3510e498f0465315f9b96e, type: 3}
+    name: Bush 2
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 23
+    Obj: {fileID: 1129914620799478865, guid: adf5250b4323f224a91ea8b3e685aa20, type: 3}
+    name: Bush 3
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 24
+    Obj: {fileID: 343747436007193381, guid: e37575867ba792140b111daecc20e129, type: 3}
+    name: Healthy Bush 1
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 2
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 25
+    Obj: {fileID: 6017001700950539012, guid: 996cff722ff6ca34eb51e99dd28e1476, type: 3}
+    name: Healthy Bush 2
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 2
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 26
+    Obj: {fileID: 7789830701163051591, guid: b90a470d6eefc8548992c1271b12bb0e, type: 3}
+    name: Healthy Bush 3
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 2
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 27
+    Obj: {fileID: 7570367336741452388, guid: 5ff2c30b5b99275418997e604f2eab1b, type: 3}
+    name: Invigorating Bush 1
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 1
+    AtkBuffEnd: 1
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 28
+    Obj: {fileID: 2359069322910414885, guid: e12db81e8aaab944fadc2985e9709140, type: 3}
+    name: Invigorating Bush 2
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 1
+    AtkBuffEnd: 1
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 29
+    Obj: {fileID: 5215010916777215930, guid: 87a93ff27a900284b89ade407289b80a, type: 3}
+    name: Invigorating Bush 3
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 1
+    AtkBuffEnd: 1
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 30
+    Obj: {fileID: 886466219820296326, guid: 84331e624b524c7468bef90405c2906c, type: 3}
+    name: Fortifying Bush 1
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 1
+    DefBuffEnd: 1
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 31
+    Obj: {fileID: 9210852455749145236, guid: 5ca27271c25b8c148af0f070e634e583, type: 3}
+    name: Fortifying Bush 2
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 1
+    DefBuffEnd: 1
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 32
+    Obj: {fileID: 9083346272359421206, guid: 8ad7558238f069b419ad0bfdfcc21f68, type: 3}
+    name: Fortifying Bush 3
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 1
+    DefBuffEnd: 1
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 33
+    Obj: {fileID: 3076469558105445607, guid: 0fee32e23dd557f4b9649c3496200071, type: 3}
+    name: Reflex Bush 1
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 1
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 34
+    Obj: {fileID: 4455529168479864006, guid: 22040d9ffc1c06745afc2ac971fea941, type: 3}
+    name: Reflex Bush 2
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 1
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 35
+    Obj: {fileID: 3006755101191061301, guid: 85c7c77b84d834940afd71904c9f27a1, type: 3}
+    name: Reflex Bush 3
+    MoveCost: 2
+    Def: 1
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 1
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 36
+    Obj: {fileID: 4810808917988633130, guid: 7ea408d89b07c8444b96ecd6ec58ce4e, type: 3}
+    name: QuickSand 1
+    MoveCost: 3
+    Def: -1
+    Atk: -1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: -1
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 37
+    Obj: {fileID: 2177973255387970359, guid: 04d9769f107b44343a63b431d68c7386, type: 3}
+    name: QuickSand 2
+    MoveCost: 3
+    Def: -1
+    Atk: -1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: -1
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 38
+    Obj: {fileID: 4652712799102290013, guid: 367d6985db334314bb9fd96f8ef1beab, type: 3}
+    name: QuickSand 3
+    MoveCost: 3
+    Def: -1
+    Atk: -1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: -1
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 39
+    Obj: {fileID: 1405873621589362219, guid: a3500f9ecdfee0d4a85eb572cd7a8545, type: 3}
+    name: Mountain 1
+    MoveCost: 5
+    Def: 2
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 40
+    Obj: {fileID: 5565943383575708788, guid: 560d40806201d7e4f8385fce06be5271, type: 3}
+    name: Mountain 2
+    MoveCost: 5
+    Def: 2
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 41
+    Obj: {fileID: 2001056010351803169, guid: 2d1a7d5e372fa5d4bbb5794d6992f61a, type: 3}
+    name: Mountain 3
+    MoveCost: 5
+    Def: 2
+    Atk: 1
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 42
+    Obj: {fileID: 6096235014218388528, guid: 27d2c460ba50ec342877ee8b9ab136ce, type: 3}
+    name: Spike 1
+    MoveCost: 1
+    Def: -1
+    Atk: 3
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 2
+    DmgEndTurn: 2
+  - ID: 43
+    Obj: {fileID: 4336351528549486197, guid: c5b6ea843ea620041821994e0cbb2d9b, type: 3}
+    name: Spike 2
+    MoveCost: 1
+    Def: -1
+    Atk: 3
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 2
+    DmgEndTurn: 2
+  - ID: 44
+    Obj: {fileID: 4661335512023609278, guid: 47152d6fa9b5c1f4396a04b85cabc98e, type: 3}
+    name: Spike 3
+    MoveCost: 1
+    Def: -1
+    Atk: 3
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 2
+    DmgEndTurn: 2
+  - ID: 45
+    Obj: {fileID: 5812051933883915100, guid: 80a74e96048bbd6418682af7805d0eb7, type: 3}
+    name: PureWater 1
+    MoveCost: 99
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 46
+    Obj: {fileID: 3258120122530125517, guid: cbf046d5eb82ea04282641cab77eb101, type: 3}
+    name: PureWater 2
+    MoveCost: 99
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 47
+    Obj: {fileID: 2925845796886397563, guid: 570918b77b55e9a4ab6acc75d721acf7, type: 3}
+    name: PureWater 3
+    MoveCost: 99
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 48
+    Obj: {fileID: 8858981578433339094, guid: dd44edda3945b5448b77d45736a76efc, type: 3}
+    name: Shoal 1
+    MoveCost: 6
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 49
+    Obj: {fileID: 9161693288815660336, guid: 4154f15045cd1dc44b7d85c1365288a7, type: 3}
+    name: Shoal 2
+    MoveCost: 6
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0
+  - ID: 50
+    Obj: {fileID: 4313868325484504816, guid: 2553b4608c8b51647ad150fe08056549, type: 3}
+    name: Shoal 3
+    MoveCost: 6
+    Def: 0
+    Atk: 0
+    AtkBuffInitial: 0
+    AtkBuffEnd: 0
+    DefBuffInitial: 0
+    DefBuffEnd: 0
+    MovBuffEnd: 0
+    HPHeal: 0
+    DmgInitial: 0
+    DmgEndTurn: 0

@@ -1,0 +1,198 @@
+use: https://docs.unity3d.com/ScriptReference/Animator.StringToHash.html
+need todo: 
+
+
+---
+
+- add online multiplayer random match up (no save)
+
+- add online multiplayer login so you can save matches and make matches for people to join and such
+
+
+add more abilities
+
+add weapons - make where to hold the same as every weapon type (for short swords, link with the current short sword handle model)
+
+add hats
+
+add to show selected weapons in weapon maker
+
+add tiles
+
+TODO: fix ui not stopping selection
+
+
+classes pass by ref, so I may need to add more class to pass by red fun times!
+-----------------------
+TO ADD weapons: for short swords link up the handle of short sword
+- falchion - made model
+- Glaudius - made model
+- Jian - may want to add a tassel 
+- Ninjato
+- Cutlass
+- scimitar
+- Dao sword
+- Katana, 
+- Long sword
+- Saber
+
+TO MODEL from short swords
+
+TO ADD weapons: Kanata stab: (same as short sword attack anim but I stab with sword rather than sweep)
+- Odachi
+TO MODEL from Kanata stab 
+
+
+TO ADD weapons: add thrusting sword type: (short sword animation jump, but side step stab, full body stab is large kanata)
+- Rapier
+- Backstab-sword
+- Estoc
+TO MODEL from thrusting sword
+- [too laggy? - Basket hilted sword]
+
+
+TO ADD weapons: heavy sword type 
+- Dadao
+- Claymore
+- Flamberge
+- Zweihander
+TO MODEL from heavy sword
+- , , 
+
+TO ADD weapons: Spear type 
+
+
+TO ADD weapons: Dagger type [also has throwing]
+
+TO ADD weapons: shield type 
+
+TO ADD weapons: Mace type 
+
+
+TO ADD weapons: Recurve Bow type 
+
+
+TO ADD weapons: Long Bow type 
+
+TO ADD weapons: Axe type 
+
+
+-----------------------
+
+- add slash animation and hit animation thing (like a frizzle of particles attached to hurt animation)
+-   so add slash when hit animation happens, and add to hurt animation when starts a red frizzle of color+particle from texture (fake particles*)
+
+
+add weapon view to char maker (only primary - change when weapon changes) - write down in char maker the currently selected weapons [have box that is empty until you select as well]
+
+
+
+look at Todo art email (recent) - has complete game plan for what to do to make fun - add fun personality (like heat, angles)
+^^ write down the stuff here (maybe)
+
+------------
+GAME MODE
+------------
+
+
+---------------------------------------
+
+----------------------------------------
+
+
+HP is raw stat gain, not percent
+
+
+- add anim for slash of attacking
+
+- add anim for if gaining buff of atk, def, mov, hp as well - this anim is just a gameobject that is a cylender with boated bottom and smaller top with sphereize to circle char that gets buff - happens in order with ienumerator for each char at end of turn (no game stalls for this - happens when you move as well for initial) [so if not 0, do cool particle effect with mat and 3d model instantiate]
+
+TO MODEL AND TEXTURE:
+- add erupting [cracking] terrain (does damage if stand on at start of turn
+- purple bush for posion
+- thorn bush
+- make null tile (movment cost of 100, but is nothing - still has selectable and raycast box
+- make button in map selector to choose from scroll list of sky boxes for map athstetics
+
+
+?- make an terrain that clears stat buffs if tileID is stood on (bush with sparkles from radial material and sparkle texture and repeat --- called "magic bush")
+
+--------------------------------
+
+- make an ability inverse stat changes (use my func)
+- make attack animations longer - get into stance, and then take a big slash, then make hurt a longer stagger
+- fix the white lines for webGL ?!
+
+
+
+make more tiles:
+- plains have texture generics for floor - I also have 0 shadow versions
+- need to add to ScrollView in mapmaker maker an image 
+- need to add to static map maker selecting the option and link to image button in scroll view
+- PopulateMapMaker - needs to add game object there
+- need to add to tile look up obj (3d model and stats)
+- make option selected tag
+- add box collider
+
+
+- 3 types of terrain in planes mat for ground mat (3 world personalitys)
+
+
+
+show weapon when using second ability as well - add abilities - and make abilities based on range use movment logic - but if not -100, then -1 always (then wall will block sword abilities) - and other ones can be handled diffrently
+
+add weapon view to char maker (only primary - change when weapon changes) - write down in char maker the currently selected weapons [have box that is empty until you select as well]
+
+- post processing
+
+- make more weapons and animations
+
+- add local match saver
+
+use unity jobs
+
+optimise
+
+
+[web GL full]
+
+
+to do online:
+- save entire map and send to other plaer (S) after every action that ends a unit turn (reloads map of other players)
+- only can act and send map data if you are the active player for that unit color
+
+
+add wireless match maker
+
+add wireless match finder
+
+add map online uploader
+
+add map online downloader
+
+add touch click support?
+
+
+
+
+
+
+gonna implement a few test abilities - then I will do more weapons, abilities, ect: then the game will feel more complete and have enjoyment to be had. 
+
+Saving local match results comes next - then online map downloader, then online play
+
+
+USE TODO Email - email says to do attack range - all of it with min range max, all drawing, damage, health bar, and such
+
+https://www.studica.com/blog/unity-tutorial-animator-controllers
+^^ talks about coding - and triggers
+
+Hide Weapons when moving?
+
+need levels of damage animations!??!?! (light, heavy, stagger [knifes], very heavy, 
+
+
+to stylize I will make a background image? and add shader effects? - post processing
+
+
+season 2 ep 1 titan

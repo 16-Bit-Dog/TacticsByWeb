@@ -1,0 +1,353 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Text;
+using System.Threading;
+using System.Net.WebSockets;
+using System;
+
+public class WebManage : MonoBehaviour
+{ //use websocket 81 
+
+    public string ErrorMessage = "";
+
+    public bool ErrorAquired = false;
+
+    public static WebManage WManage;
+
+    public uint id = 0; //0 means nothing
+
+    public bool GetLoginID = false;
+
+    public bool wait = false;
+
+    public string LoginUsername; // only allow numbers and letters, else people can do weird sql injection attacks
+    public string LoginPassword; // only allow numbers and letters, else people can do weird sql injection attacks
+
+    public string Username;
+
+    public string email; //force remove ; ' -- /*   */   xp_ 
+
+    public bool CreateNewAccountBool = false;
+
+    public bool RandomMatch = false;
+
+    string pathToMapData = "";
+    bool SendMapDataBool = false;
+    bool GetMapDataBool = false;
+
+    public bool FoundMatch = false;
+
+    Uri u = new Uri("ws://174.95.213.15:81/");
+    ClientWebSocket cws = null;
+    ArraySegment<byte> buf = new ArraySegment<byte>(new byte[1024]);
+
+    void Start()
+    {
+
+        if (WManage == null)
+        {
+            WManage = this;
+
+            DontDestroyOnLoad(WManage);
+
+            Connect();
+        }
+        else if (WManage != this)
+        {
+            //In case there is a different instance destroy this one.
+            Destroy(this);
+        }
+
+    }
+
+    void SetError(string Message) //
+    {
+        ErrorAquired = true;
+        ErrorMessage = Message;
+        CreateNewAccountBool = false;
+        GetLoginID = false;
+    }
+
+    public void LoadBackToMainFromLogin()
+    {
+        if (WManage.GetLoginID == false && WManage.CreateNewAccountBool == false)
+            WManage.ErrorAquired = false;
+
+        WManage.CreateNewAccountBool = false;
+
+        WManage.GetLoginID = false;
+
+        StaticDataMapMaker.controlObj.LoadMain();
+
+    }
+
+
+    public void LoadRandomMatchBackToMain() //TODO: make it clear from ID avaible from random match pool when you quit - and test [need to test now] - remove back when found match is true - TODO
+    {//or make a confirm button :shrug:
+        if (FoundMatch == false)
+        {
+            WebManage.WManage.RandomMatch = false;
+
+
+
+            StaticDataMapMaker.controlObj.LoadMain();
+        }
+    }
+
+    async void Connect()
+    {
+        cws = new ClientWebSocket();
+        try
+        {
+            cws.Options.AddSubProtocol("null");
+            await cws.ConnectAsync(u, CancellationToken.None);
+            if (cws.State == WebSocketState.Open) Debug.Log("connected");
+
+            while (cws.State == WebSocketState.Open)
+            {
+
+                if (id == 0)
+                { //get tmp id - reserved from 1 bill and onward
+
+                    ///AskAndGetTmpId
+                    ArraySegment<byte> b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("TID"));
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                    WebSocketReceiveResult r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                    Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                    id = UInt32.Parse(Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                    Username = id.ToString();
+                    ///
+
+                }
+                else if (GetLoginID == true)
+                {
+                    ///
+                    //get login id if you login 1 - less than random nums by a large sum - AskAndGetFullId
+                    ArraySegment<byte> b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("FID")); //send info that you need to pass login info to get id
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                    WebSocketReceiveResult r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                    Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                    b = new ArraySegment<byte>(Encoding.UTF8.GetBytes(email)); //send email info to login
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                    r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                    Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                    if ("Y" == Encoding.UTF8.GetString(buf.Array, 0, r.Count))
+                    { //email is in data base
+                        b = new ArraySegment<byte>(Encoding.UTF8.GetBytes(LoginPassword)); //send password info
+                        await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                        r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                        Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                        if ("Y" == Encoding.UTF8.GetString(buf.Array, 0, r.Count))
+                        { //password is alined with email in data base
+
+                            b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Y"));
+
+                            await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                            r = await cws.ReceiveAsync(buf, CancellationToken.None);
+
+                            id = UInt32.Parse(Encoding.UTF8.GetString(buf.Array, 0, r.Count)); //get id after password info
+
+                            b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Y"));
+
+                            await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                            r = await cws.ReceiveAsync(buf, CancellationToken.None);
+
+                            Username = Encoding.UTF8.GetString(buf.Array, 0, r.Count);
+
+                            b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("Y"));
+
+                            await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                        }
+                        else
+                        {
+                            SetError(Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+                            //password is wrong
+                            //send email to person in question that someone has failed atempt at log-ing into their account
+                        }
+                    }
+                    else
+                    {
+                        SetError(Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+                        //email is not in data-base
+                    }
+                    GetLoginID = false;
+                    ///
+                }
+
+                else if (CreateNewAccountBool == true)
+                {
+                    ///
+                    //CreateNewAccount();
+                    ArraySegment<byte> b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("CID")); //send info that you need to pass login info to get id
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                    WebSocketReceiveResult r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                    Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                    b = new ArraySegment<byte>(Encoding.UTF8.GetBytes(email)); //send email info to create account with
+
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                    r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                    Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                    if ("Y" == Encoding.UTF8.GetString(buf.Array, 0, r.Count))
+                    {//5 means that the email is not used and is real - you can continue to create new account 
+                        b = new ArraySegment<byte>(Encoding.UTF8.GetBytes(LoginUsername)); //send username info to create account with - for visuals
+                        await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                        r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                        Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                        if ("Y" == Encoding.UTF8.GetString(buf.Array, 0, r.Count))
+                        {
+                            b = new ArraySegment<byte>(Encoding.UTF8.GetBytes(LoginPassword)); //send password info to create account with
+                            await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                            r = await cws.ReceiveAsync(buf, CancellationToken.None);
+                            Debug.Log("Got: " + Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                            id = UInt32.Parse(Encoding.UTF8.GetString(buf.Array, 0, r.Count)); //get id after password info is sent for your new account number
+                        }
+                        else
+                        {
+                            SetError(Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+
+                        }
+                    }
+                    else
+                    {
+                        SetError(Encoding.UTF8.GetString(buf.Array, 0, r.Count));
+                        //email is used/not-real
+
+                    }
+                    CreateNewAccountBool = false;
+                    ///
+                }
+                else if (RandomMatch == true)
+                {
+                    //query for all waiting players and server picks 2 random ones - until then you wait for a true return and it signs you to continue
+                    ArraySegment<byte> b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("RM")); //random match
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+
+                    string PairedUp = "f";
+
+                    WebSocketReceiveResult r;// = await cws.ReceiveAsync(buf, CancellationToken.None);
+
+                    b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("f"));
+
+                    while (PairedUp == "f" || RandomMatch == false)
+                    {
+                        r = await cws.ReceiveAsync(buf, CancellationToken.None);
+
+                        PairedUp = Encoding.UTF8.GetString(buf.Array, 0, r.Count);
+
+                        await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+                    }
+
+                    // need to fetch and pass on username of guy you are fighting
+                    FoundMatch = true;
+
+                    RandomMatch = false;
+
+                }
+                else if (SendMapDataBool == true)
+                {
+                    //SendMapDataFunc();
+
+                    SendMapDataBool = false;
+                }
+                else if (GetMapDataBool == true)
+                {
+                    //GetMapDataFunc();
+
+                    GetMapDataBool = false;
+                }
+
+
+                else //keep connection
+                {
+                    //Say hello - by getting ID of the server side so you don't cheat my ID system :anger:
+                    ArraySegment<byte> b = new ArraySegment<byte>(Encoding.UTF8.GetBytes("h"));
+                    await cws.SendAsync(b, WebSocketMessageType.Text, true, CancellationToken.None);
+                    WebSocketReceiveResult r = await cws.ReceiveAsync(buf, CancellationToken.None);
+
+                    id = UInt32.Parse(Encoding.UTF8.GetString(buf.Array, 0, r.Count)); //get id after password info is sent for your new account number
+
+                    //TODO: constant poll for usernmae to send - maybe? maybe not? - slower if I do, so I think I will just update it before a match and send it there
+                    //Username = id.ToString();
+                }
+
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("ISSUE: " + e.Message);
+        }
+    }
+
+    async void SendMapDataFunc()
+    {
+        //pathToMapData is used to send, and get
+
+
+    }
+    async void GetMapDataFunc()
+    {
+        //pathToMapData is used to send, and get
+
+
+    }
+
+
+    IEnumerator WaitToConnectAgain()
+    {
+        wait = true;
+        int frame = 0;
+        while (frame < 60)
+        {
+            frame++;
+            yield return null;
+        }
+
+        Connect();
+        wait = false;
+        yield return null;
+    }
+
+    void Update()
+    {
+        if ((cws.State == WebSocketState.Closed || cws.State == WebSocketState.CloseReceived) && wait == false)
+        {
+
+            id = 0;
+            IEnumerator wtca = WaitToConnectAgain();
+            StartCoroutine(wtca);
+
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (cws != null)
+        {
+            if (cws.State == WebSocketState.Open)
+            {
+                cws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+            }
+        }
+    }
+}

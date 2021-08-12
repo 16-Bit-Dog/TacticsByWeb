@@ -1,0 +1,430 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Text;
+using System.Threading;
+//using System.Net.WebSockets;
+using System;
+
+using NativeWebSocket;
+
+public class WebManage : MonoBehaviour
+{ //use websocket 81 
+
+    public class stringC
+    {
+        public string s;
+
+        public stringC()
+        {
+            s = "";
+        }
+        public stringC(string i)
+        {
+            s = i;
+        }
+    }
+    
+    stringC result = new stringC();
+
+    bool connected = false;
+
+    public string ErrorMessage = "";
+
+    public bool ErrorAquired = false;
+    
+    public static WebManage WManage;
+
+    public uint id = 0; //0 means nothing
+
+    public bool GetLoginID = false;
+
+    public bool wait = false;
+
+    public string LoginUsername; // only allow numbers and letters, else people can do weird sql injection attacks
+    public string LoginPassword; // only allow numbers and letters, else people can do weird sql injection attacks
+
+    public string Username;
+
+    public string email; //force remove ; ' -- /*   */   xp_ 
+
+    public bool CreateNewAccountBool = false;
+
+    public bool RandomMatch = false;
+
+    string pathToMapData = "";
+    bool SendMapDataBool = false;
+    bool GetMapDataBool = false;
+
+    public bool FoundMatch = false;
+
+    //Uri u = new Uri("ws://174.95.213.15:81/");
+    WebSocket cws = null;
+    ArraySegment<byte> buf = new ArraySegment<byte>(new byte[1024]);
+
+    void Start() { 
+
+        if (WManage == null)
+        {
+            WManage = this;
+
+            DontDestroyOnLoad(WManage);
+
+            Connect();
+        }
+        else if (WManage != this)
+        {
+            //In case there is a different instance destroy this one.
+            Destroy(this);
+        }
+    
+    }
+
+    void SetError(string Message) //
+    {
+        ErrorAquired = true;
+        ErrorMessage = Message;
+    }
+
+    void GetMessS(stringC rs)
+    {
+
+        WManage.cws.OnMessage += (bytes) =>
+        {
+            rs.s = System.Text.Encoding.UTF8.GetString(bytes);
+
+            if(rs.s == "")
+            {
+                rs.s = "0";
+            }
+        };
+
+    }
+
+    public void LoadBackToMainFromLogin()
+    {
+        if(WManage.GetLoginID == false && WManage.CreateNewAccountBool == false)
+            WManage.ErrorAquired = false;
+
+            WManage.CreateNewAccountBool = false;
+
+            WManage.GetLoginID = false;
+
+            StaticDataMapMaker.controlObj.LoadMain();
+        
+    }
+
+    public void LoadRandomMatchBackToMain() //TODO: make it clear from ID avaible from random match pool when you quit - and test [need to test now] - remove back when found match is true - TODO
+    {//or make a confirm button :shrug:
+        if (FoundMatch == false)
+        {
+            WManage.RandomMatch = false;
+
+
+
+            StaticDataMapMaker.controlObj.LoadMain();
+        }
+    }
+
+    IEnumerator logicM()
+    {
+        //try
+        //{
+
+        //await cws.ConnectAsync(u, CancellationToken.None);
+        if (cws.State == WebSocketState.Open) 
+        {
+            Debug.Log("connected");
+
+            while (cws.State == WebSocketState.Open)
+            {
+
+                if (id == 0)
+                { //get tmp id - reserved from 1 bill and onward
+
+                    //TODO: may need to add await and put in async void function
+                    cws.SendText("TID");
+
+                    GetMessS(result);
+                    yield return null;
+
+                    id = UInt32.Parse(result.s);
+
+                    Debug.Log("Got: " + id);
+
+                    Username = id.ToString();
+                    ///
+
+                }
+                else if (GetLoginID == true)
+                {
+                    
+                    ///
+                    //get login id if you login 1 - less than random nums by a large sum - AskAndGetFullId
+
+                    cws.SendText("FID");
+
+                    GetMessS(result);
+                    yield return null;
+
+                    Debug.Log("Got: " + result.s);
+
+                    cws.SendText(email);
+
+                    GetMessS(result);
+                    yield return null;
+
+                    Debug.Log("Got: " + result.s);
+
+                    if ("Y" == result.s)
+                    { //email is in data base
+                        cws.SendText(LoginPassword);
+
+                        GetMessS(result);
+                        yield return null;
+
+                        Debug.Log("Got: " + result.s);
+
+                        if ("Y" == result.s)
+                        { //password is alined with email in data base
+
+                            cws.SendText("Y");
+
+                            GetMessS(result);
+                            yield return null;
+
+                            id = UInt32.Parse(result.s); //get id after password info
+
+                            cws.SendText("Y");
+
+                            GetMessS(result);
+                            yield return null;
+
+                            Username = result.s;
+
+                            cws.SendText("Y");
+
+                        }
+                        else
+                        {
+                            SetError(result.s);
+                            //password is wrong
+                            //send email to person in question that someone has failed atempt at log-ing into their account
+                        }
+                    }
+                    else
+                    {
+                        SetError(result.s);
+                        //email is not in data-base
+                    }
+                    GetLoginID = false;
+                    ///
+                }
+
+                else if (CreateNewAccountBool == true)
+                {
+                    
+                    ///
+                    //CreateNewAccount();
+                    cws.SendText("CID");
+
+                    GetMessS(result);
+                    yield return null;//gets result after the yield
+
+                    Debug.Log("Got: " + result.s);
+
+                    cws.SendText(email);
+
+                    GetMessS(result);
+                    yield return null;
+
+                    Debug.Log("Got: " + result.s);
+
+                    if ("Y" == result.s)
+                    {//5 means that the email is not used and is real - you can continue to create new account 
+                        cws.SendText(LoginUsername);
+
+                        GetMessS(result);
+                        yield return null;
+
+                        Debug.Log("Got: " + result.s);
+
+                        if ("Y" == result.s)
+                        {
+                            cws.SendText(LoginPassword);
+
+                            GetMessS(result);
+                            yield return null;
+
+                            Debug.Log("Got: " + result.s + "Done");
+
+                            id = UInt32.Parse(result.s); //get id after password info is sent for your new account number
+                        }
+                        else
+                        {
+
+                            SetError(result.s);
+
+                        }
+                    }
+                    else
+                    {
+                        SetError(result.s);
+                        //email is used/not-real
+
+                    }
+                    CreateNewAccountBool = false;
+                    ///
+                }
+                else if (RandomMatch == true)
+                {
+                    //query for all waiting players and server picks 2 random ones - until then you wait for a true return and it signs you to continue
+                    cws.SendText(LoginUsername);
+
+                    string PairedUp = "f";
+
+                    while (PairedUp == "f" || RandomMatch == false)
+                    {
+                        GetMessS(result);
+                        yield return null;
+
+                        PairedUp = result.s;
+
+                        cws.SendText(result.s);
+                    }
+
+                    // need to fetch and pass on username of guy you are fighting
+                    FoundMatch = true;
+
+
+
+                    //
+                    RandomMatch = false;
+
+                }
+                else if (SendMapDataBool == true)
+                {
+                    //SendMapDataFunc();
+
+                    SendMapDataBool = false;
+                }
+                else if (GetMapDataBool == true)
+                {
+                    //GetMapDataFunc();
+
+                    GetMapDataBool = false;
+                }
+
+                else //keep connection
+                {
+                    //Say hello - by getting ID of the server side so you don't cheat my ID system :anger:
+                    cws.SendText("h");
+
+                    GetMessS(result);
+                    yield return null;
+
+                 //   Debug.Log(result.s);
+                    id = UInt32.Parse(result.s); //get id after password info is sent for your new account number
+
+                    //TODO: constant poll for usernmae to send - maybe? maybe not? - slower if I do, so I think I will just update it before a match and send it there
+                    //Username = id.ToString();
+                }
+
+            }
+
+        }
+        else
+        {
+            Debug.Log("failed to connect");
+        }
+
+
+
+        //}
+        //catch (Exception e)
+        //{
+        //    Debug.Log("ISSUE: " + e.Message);
+        //    yield return null;
+        //}
+        yield return null;
+    }
+
+    async void Connect()
+    {
+        cws = new WebSocket("ws://174.95.213.15:81/", "null");
+        
+        
+        cws.OnOpen += () =>
+        {
+            IEnumerator logicWS = logicM();
+            StartCoroutine(logicWS);
+        };
+        
+        cws.Connect();//may need await
+
+    }
+
+    async void SendMapDataFunc()
+    {
+        //pathToMapData is used to send, and get
+
+
+    }
+    async void GetMapDataFunc()
+    {
+        //pathToMapData is used to send, and get
+
+
+    }
+
+
+    IEnumerator WaitToConnectAgain()
+    {
+        wait = true;
+        int frame = 0;
+        while(frame < 60)
+        {
+            frame++;
+            yield return null;
+        }
+            
+        Connect();
+        wait = false;
+        yield return null;
+    }
+
+    void Update()
+    {
+
+#if !UNITY_WEBGL || UNITY_EDITOR
+        Debug.Log(cws.m_MessageList.Count
+
+        cws.DispatchMessageQueue();
+        
+#endif
+
+        if ((cws.State == WebSocketState.Closed || cws.State == WebSocketState.Closing) && wait == false) {
+            
+            id = 0;
+            IEnumerator wtca = WaitToConnectAgain();
+            StartCoroutine(wtca);
+        
+        }
+    }
+
+    private async void OnApplicationQuit()
+    {
+        await cws.Close();
+    }
+
+    void OnDestroy()
+    {
+        if (cws != null)
+        {
+            if (cws.State == WebSocketState.Open)
+            {
+                OnApplicationQuit();
+            }
+        }
+    }
+}
