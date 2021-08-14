@@ -517,13 +517,13 @@ public class WebManage : MonoBehaviour
 
                     SendMapDataBat1Bool = false;
                 }
-                else if (GetMapDataBat1Bool == true) //request map data bool
-                {
+                //else if (GetMapDataBat1Bool == true) //request map data bool
+                //{
                     //GetMapDataFunc();
 
 
-                    GetMapDataBat1Bool = false;
-                }
+                //    GetMapDataBat1Bool = false;
+                //}
 
                 else //keep connection
                 {
@@ -593,6 +593,7 @@ public class WebManage : MonoBehaviour
                         while (sentData == true) { yield return null; };
                         
                         GivenMapData = true;
+                        WebManage.WManage.GetMapDataBat1Bool = false;
 
                     }
                     cws.SendText("h");

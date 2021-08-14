@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
+using System.Reflection;
 
 public class LocalMatchStart : MonoBehaviour
 {
@@ -87,8 +88,11 @@ public class LocalMatchStart : MonoBehaviour
             }
         }
     }
-    
+
+    List<Action> TSAFuncs = new List<Action>();
+
     LineDrawer ArrowLineDrawer;
+
 
     public LocalMatchStart LMS;
 
@@ -109,11 +113,11 @@ public class LocalMatchStart : MonoBehaviour
     int CXPos = 0;
     int CYPos = 0;
 
-    int currentTurn = 0;
+    public int currentTurn = 0;
 
-    int CurrentTeamTurn = 0;
+    public int CurrentTeamTurn = 0;
 
-    int TeamCount = 0;
+    public int TeamCount = 0;
 
     int MonumentValBlue = 0;
     int MonumentValRed = 0;
@@ -431,6 +435,13 @@ public class LocalMatchStart : MonoBehaviour
         DeleteCharArray(localMatchIntermediateCS.LMICS.greenC);
         DeleteCharArray(localMatchIntermediateCS.LMICS.purpleC);
     }
+    
+    public void DeleteAllTmpTiles()
+    {
+        ClearTmpAtkTiles();
+        ClearTmpAbilityTiles();
+        ClearTmpMoveTiles();
+    }
 
     public void DeleteMapLogic()
     {
@@ -457,6 +468,7 @@ public class LocalMatchStart : MonoBehaviour
 
         if (data != null)
         {
+            //Debug.Log(JsonString);
             //localMatchIntermediateCS.LocalMatchSaveMapData data = (localMatchIntermediateCS.LocalMatchSaveMapData)bf.Deserialize(file);
 
             //easy vars from LMICS fill
@@ -477,6 +489,8 @@ public class LocalMatchStart : MonoBehaviour
             LMS.currentlyFighting = data.currentlyFighting;
             LMS.currentTurn = data.currentTurn;
             LMS.CurrentTeamTurn = data.CurrentTeamTurn;
+            LMS.ifLoopTurnTextFix();
+
             //LMS.TeamCount = data.TeamCount;
             LMS.MonumentValBlue = data.MonumentValBlue;
             LMS.MonumentValRed = data.MonumentValRed;
@@ -492,27 +506,55 @@ public class LocalMatchStart : MonoBehaviour
             LMS.SelectedAttackTarget = data.SelectedAttackTarget;
 
             //Window State vars
-            LMS.HoverInfo.SetActive(data.IsHoverInfoActive);
-            LMS.HoverInfoCloseButton.SetActive(data.IsHoverInfoCloseButtonActive);
-            LMS.ActionMenuObj.SetActive(data.IsActionMenuObjActive);
-            LMS.CloseActionMenuObj.SetActive(data.IsCloseActionMenuObjActive);
-            LMS.CloseActionAtkObj.SetActive(data.IsCloseActionAtkObjActive);
-            LMS.ActionAbilityInfoObj.SetActive(data.IsActionAbilityInfoObjActive);
-            LMS.CloseActionAbilityObj.SetActive(data.IsCloseActionAbilityObjActive);
-            LMS.Attack1.SetActive(data.IsAttack1Active);
-            LMS.Attack2.SetActive(data.AIsttack2Active);
-            LMS.Ability1.SetActive(data.IsAbility1Active);
-            LMS.Ability2.SetActive(data.IsAbility2Active);
-            LMS.Move.SetActive(data.IsMoveActive);
-            LMS.TileInfoObj.SetActive(data.IsTileInfoObjActive);
-            LMS.TileInfoToggle.SetActive(data.IsTileInfoToggleActive);
-            LMS.AttackPrepScreenAttacker.SetActive(data.IsAttackPrepScreenAttackerActive);
-            LMS.AttackPrepScreenDefender.SetActive(data.IsAttackPrepScreenDefenderActive);
-            LMS.StartToAttackButton.SetActive(data.IsStartToAttackButtonActive);
-            LMS.CloseActionRotateObjBackButton.SetActive(data.IsCloseActionRotateObjBackButtonActive);
-            LMS.WinConditionObj.SetActive(data.IsWinConditionObjActive);
+            if (WebManage.WManage.MatchType == 0)
+            {
+                LMS.HoverInfo.SetActive(data.IsHoverInfoActive);
+                LMS.HoverInfoCloseButton.SetActive(data.IsHoverInfoCloseButtonActive);
+                LMS.ActionMenuObj.SetActive(data.IsActionMenuObjActive);
+                LMS.CloseActionMenuObj.SetActive(data.IsCloseActionMenuObjActive);
+                LMS.CloseActionAtkObj.SetActive(data.IsCloseActionAtkObjActive);
+                LMS.ActionAbilityInfoObj.SetActive(data.IsActionAbilityInfoObjActive);
+                LMS.CloseActionAbilityObj.SetActive(data.IsCloseActionAbilityObjActive);
+                LMS.Attack1.SetActive(data.IsAttack1Active);
+                LMS.Attack2.SetActive(data.AIsttack2Active);
+                LMS.Ability1.SetActive(data.IsAbility1Active);
+                LMS.Ability2.SetActive(data.IsAbility2Active);
+                LMS.Move.SetActive(data.IsMoveActive);
+                LMS.TileInfoObj.SetActive(data.IsTileInfoObjActive);
+                LMS.TileInfoToggle.SetActive(data.IsTileInfoToggleActive);
+                LMS.AttackPrepScreenAttacker.SetActive(data.IsAttackPrepScreenAttackerActive);
+                LMS.AttackPrepScreenDefender.SetActive(data.IsAttackPrepScreenDefenderActive);
+                LMS.StartToAttackButton.SetActive(data.IsStartToAttackButtonActive);
+                LMS.CloseActionRotateObjBackButton.SetActive(data.IsCloseActionRotateObjBackButtonActive);
+                LMS.WinConditionObj.SetActive(data.IsWinConditionObjActive);
+            }
+            else if(WebManage.WManage.MatchType == 1 && TeamOrderSameAsCurrentTurn() == false)
+            {
+                    //LMS.HoverInfo.SetActive(false);
+                    //LMS.HoverInfoCloseButton.SetActive(data.IsHoverInfoCloseButtonActive);
+                    LMS.ActionMenuObj.SetActive(false);
+                    LMS.CloseActionMenuObj.SetActive(false);
+                    LMS.CloseActionAtkObj.SetActive(false);
+                    LMS.ActionAbilityInfoObj.SetActive(false);
+                    LMS.CloseActionAbilityObj.SetActive(false);
+                    LMS.Attack1.SetActive(false);
+                    LMS.Attack2.SetActive(false);
+                    LMS.Ability1.SetActive(false);
+                    LMS.Ability2.SetActive(false);
+                    LMS.Move.SetActive(false);
+                    //LMS.TileInfoObj.SetActive();
+                    //LMS.TileInfoToggle.SetActive(data.IsTileInfoToggleActive);
+                    LMS.AttackPrepScreenAttacker.SetActive(false);
+                    LMS.AttackPrepScreenDefender.SetActive(false);
+                    LMS.StartToAttackButton.SetActive(false);
+                    LMS.CloseActionRotateObjBackButton.SetActive(false);
+                    //LMS.WinConditionObj.SetActive(data.IsWinConditionObjActive);
+                
+            }
 
-            //tmp tiles
+        //tmp tiles
+        if (WebManage.WManage.MatchType == 0)
+        {
             foreach (Tuple<int, int> i in data.TmpAbilityTiles)
             {
                 LMS.TmpAbilityTiles[i] = Instantiate(MiscTileObj.MTO.AbilityTile, new Vector3(4 * i.Item2, -19.5f, 4 * i.Item1), Quaternion.identity); ;
@@ -525,7 +567,7 @@ public class LocalMatchStart : MonoBehaviour
             {
                 LMS.TmpAtkTiles[i] = Instantiate(MiscTileObj.MTO.AttackTile, new Vector3(4 * i.Item2, -19.5f, 4 * i.Item1), Quaternion.identity); ;
             }
-
+        }
 
             //load map
             localMatchIntermediateCS.LMICS.TilesArray = new localMatchIntermediateCS.MapMakerVarsDat[data.TilesArray.GetLength(0)][];
@@ -542,33 +584,43 @@ public class LocalMatchStart : MonoBehaviour
                 }
             }
 
-            //load chars with items and material into group and dictionary
-
+        //load chars with items and material into group and dictionary
+        try
+        {
             LoadCharsInto(localMatchIntermediateCS.LMICS.blueC, data.BlueChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.redC, data.RedChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.yellowC, data.YellowChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.greenC, data.GreenChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.purpleC, data.PurpleChar);
-
+        }
+        catch { Debug.Log("Failed to Load CharData into arrays"); }
+        try { 
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.blueC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.redC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.yellowC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.greenC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.purpleC, localMatchIntermediateCS.LMICS.TilesArray);
+        }
+        catch { Debug.Log("Failed to Load CharData into map"); }
 
-            if (data.SelectedCharX != -1)
+            try
             {
-                LMS.SelectedChar = localMatchIntermediateCS.LMICS.TilesArray[data.SelectedCharY][data.SelectedCharX].CDat;
-
-                Renderer[] ComponentR; //color selected char
-                ComponentR = LMS.SelectedChar.CharObj.GetComponentsInChildren<Renderer>();
-                for (int tmp = 0; tmp < ComponentR.GetLength(0); tmp++)
+                if (data.SelectedCharX != -1)
                 {
 
-                    ComponentR[tmp].material = ConstantCharObject.CCObj.Selected;
+                    LMS.SelectedChar = localMatchIntermediateCS.LMICS.TilesArray[data.SelectedCharY][data.SelectedCharX].CDat;
 
+                    Renderer[] ComponentR; //color selected char
+                    ComponentR = LMS.SelectedChar.CharObj.GetComponentsInChildren<Renderer>();
+                    for (int tmp = 0; tmp < ComponentR.GetLength(0); tmp++)
+                    {
+
+                        ComponentR[tmp].material = ConstantCharObject.CCObj.Selected;
+
+                    }
                 }
             }
+            catch { Debug.Log("Failed to Load selected Char"); }
         }
     }
 
@@ -608,9 +660,11 @@ public class LocalMatchStart : MonoBehaviour
         if (CheckToLoadMapFromWeb())
         {
             WebManage.WManage.GivenMapData = false;
-            DeleteMapLogic();
-            DeleteAllCharArraysLogic();
-            LoadMapStateBat1();
+            LMS.DeleteMapLogic();
+            LMS.DeleteAllCharArraysLogic();
+            LMS.DeleteAllTmpTiles();
+
+            LMS.LoadMapStateBat1();
         }
     }
 
@@ -1213,7 +1267,6 @@ public class LocalMatchStart : MonoBehaviour
         if (LMS.currentlyFighting == false) //only work once fighting anim is done
         {
 
-
             CloseActionMenuAndDeselect();
 
             Renderer[] ComponentR;
@@ -1240,7 +1293,7 @@ public class LocalMatchStart : MonoBehaviour
 
                         NewTurnDeathHandle(localMatchIntermediateCS.LMICS.blueC[i]);
 
-                        if (CompareMonument(localMatchIntermediateCS.LMICS.blueC[i]))
+                        if (CompareMonument(localMatchIntermediateCS.LMICS.blueC[i])) //die and give points is possible... :smile:
                         {
 
                             MonumentValBlue += 1;
@@ -1378,7 +1431,14 @@ public class LocalMatchStart : MonoBehaviour
             //Debug.Log(LMS.currentTurn);
             LMS.WinLogic();
 
-            LMS.SaveMapStateAll();
+            if (WebManage.WManage.MatchType == 0) 
+            {
+                LMS.SaveMapStateAll();
+            }
+            else if(WebManage.WManage.MatchType == 1)
+            {
+                SendMapDataNetworkBat1();
+            }
         }
     }
     void NewTurnLogicBat1()
@@ -1579,6 +1639,7 @@ public class LocalMatchStart : MonoBehaviour
         LMS.StartToAttackButton.SetActive(true);
         LMS.AttackPrepScreenDefender.SetActive(true);
         LMS.CloseActionAtkObj.SetActive(true);
+
     }
 
     IEnumerator DiedAnimation(localMatchIntermediateCS.CharDat Cdat, Animator CdatAnim)
@@ -1978,6 +2039,11 @@ public class LocalMatchStart : MonoBehaviour
                 CloseActionMenuAndDeselect();
 
             }
+            else
+            {
+                BasicSendMapDataSTBlocker();
+            }
+
         }
 
     }
@@ -2123,6 +2189,7 @@ public class LocalMatchStart : MonoBehaviour
 
         LMS.SelectedChar = null;
 
+        BasicSendMapDataSTBlocker();
     }
 
     public void ShowActionMenu(int y, int x)
@@ -2637,10 +2704,88 @@ public class LocalMatchStart : MonoBehaviour
         }
     }
 
+    void ifLoopTurnTextFix()
+    {
+        if(LMS.CurrentTeamTurn == 1)
+        {
+            LMS.WhichColorTurn.text = "blue";
+            LMS.WhichColorTurn.color = new Color32(0, 0, 255, 255);
+        }
+        else if (LMS.CurrentTeamTurn == 2)
+        {
+            LMS.WhichColorTurn.text = "red";
+            LMS.WhichColorTurn.color = new Color32(255, 0, 0, 255);
+        }
+        else if(LMS.CurrentTeamTurn == 3)
+        {
+            LMS.WhichColorTurn.text = "green";
+            LMS.WhichColorTurn.color = new Color32(0, 255, 0, 255);
+        }
+        else if(LMS.CurrentTeamTurn == 4)
+        {
+            LMS.WhichColorTurn.text = "yellow";
+            LMS.WhichColorTurn.color = new Color32(255, 255, 0, 255);
+        }
+        else if(LMS.CurrentTeamTurn == 5)
+        {
+            LMS.WhichColorTurn.text = "purple";
+            LMS.WhichColorTurn.color = new Color32(255, 0, 255, 255);
+        }
+
+    }
+
+    void SetYourTurnIdentifier()
+    {
+        if (WebManage.WManage.MatchType == 1)
+        {
+
+            //starts at 1,2,3,4,0 as turn order:
+            //Action BlueTurnStartA = BlueTurnStart;
+            //Action RedTurnStartA = RedTurnStart;
+            //Action YellowTurnStartA = YellowTurnStart;
+            //Action GreenTurnStartA = GreenTurnStart;
+            //Action PurpleTurnStartA = PurpleTurnStart;
+
+            if (startTurnFunctionOrder[Convert.ToInt32(WebManage.WManage.TeamOrder)] == TSAFuncs[0])
+            {
+                LMS.SetYourColorThing = true;
+                LMS.YourColorTurn.text = "you: blue";
+                LMS.YourColorTurn.color = new Color32(0, 0, 255, 255);
+            }
+            else if (startTurnFunctionOrder[Convert.ToInt32(WebManage.WManage.TeamOrder)] == TSAFuncs[1])
+            {
+                LMS.SetYourColorThing = true;
+                LMS.YourColorTurn.text = "you: red";
+                LMS.YourColorTurn.color = new Color32(255, 0, 0, 255);
+            }
+
+            else if (startTurnFunctionOrder[Convert.ToInt32(WebManage.WManage.TeamOrder)] == TSAFuncs[2]) //yellow
+            {
+                LMS.SetYourColorThing = true;
+                LMS.YourColorTurn.text = "you: yellow";
+                LMS.YourColorTurn.color = new Color32(255, 255, 0, 255);
+            }
+
+            else if (startTurnFunctionOrder[Convert.ToInt32(WebManage.WManage.TeamOrder)] == TSAFuncs[3]) //green - need to fix this inconsistancy of green and yellow flip in the manager only
+            {
+                LMS.SetYourColorThing = true;
+                LMS.YourColorTurn.text = "you: green";
+                LMS.YourColorTurn.color = new Color32(0, 255, 0, 255);
+            }
+
+            else if (startTurnFunctionOrder[Convert.ToInt32(WebManage.WManage.TeamOrder)] == TSAFuncs[4])
+            {
+                LMS.SetYourColorThing = true;
+                LMS.YourColorTurn.text = "you: purple";
+                LMS.YourColorTurn.color = new Color32(255, 0, 255, 255);
+            }
+        }
+    }
+
     void BlueTurnStart()
     {
         Debug.Log("Blue New Turn");
-        CurrentTeamTurn = 1;
+        LMS.CurrentTeamTurn = 1;
 
         for (int i = 0; i < localMatchIntermediateCS.LMICS.blueC.Count; i++) 
         {
@@ -2657,18 +2802,12 @@ public class LocalMatchStart : MonoBehaviour
         LMS.WhichColorTurn.text = "blue";
         LMS.WhichColorTurn.color = new Color32(0, 0, 255, 255);
 
-        if (LMS.SetYourColorThing == false && TeamOrderSameAsCurrentTurn())
-        {
-            LMS.SetYourColorThing = true;
-            LMS.YourColorTurn.text = "you: blue";
-            LMS.YourColorTurn.color = new Color32(0, 0, 255, 255);
-        }
 
     }
     void RedTurnStart()
     {
         Debug.Log("Red New Turn");
-        CurrentTeamTurn = 2;
+        LMS.CurrentTeamTurn = 2;
 
         for (int i = 0; i < localMatchIntermediateCS.LMICS.redC.Count; i++)
         {
@@ -2685,17 +2824,12 @@ public class LocalMatchStart : MonoBehaviour
         LMS.WhichColorTurn.text = "red";
         LMS.WhichColorTurn.color = new Color32(255, 0, 0, 255);
 
-        if (LMS.SetYourColorThing == false && TeamOrderSameAsCurrentTurn())
-        {
-            LMS.SetYourColorThing = true;
-            LMS.YourColorTurn.text = "you: red";
-            LMS.YourColorTurn.color = new Color32(255, 0, 0, 255);
-        }
+
     }
     void YellowTurnStart() // I flipped the things... i'm dumb... meh - green
     {
         Debug.Log("Green New Turn");
-        CurrentTeamTurn = 3;
+        LMS.CurrentTeamTurn = 3;
 
         for (int i = 0; i < localMatchIntermediateCS.LMICS.yellowC.Count; i++)
         {
@@ -2711,19 +2845,12 @@ public class LocalMatchStart : MonoBehaviour
         
         LMS.WhichColorTurn.text = "green";
         LMS.WhichColorTurn.color = new Color32(0, 255, 0, 255);
-
-        if (LMS.SetYourColorThing == false && TeamOrderSameAsCurrentTurn())
-        {
-            LMS.SetYourColorThing = true;
-            LMS.YourColorTurn.text = "you: green";
-            LMS.YourColorTurn.color = new Color32(0, 255, 0, 255);
-        }
         
     }
     void GreenTurnStart() // // I flipped the things... i'm dumb... meh - yellow
     {
         Debug.Log("Yellow New Turn");
-        CurrentTeamTurn = 4;
+        LMS.CurrentTeamTurn = 4;
 
         for (int i = 0; i < localMatchIntermediateCS.LMICS.greenC.Count; i++)
         {
@@ -2740,17 +2867,12 @@ public class LocalMatchStart : MonoBehaviour
         LMS.WhichColorTurn.text = "yellow";
         LMS.WhichColorTurn.color = new Color32(255, 255, 0, 255);
 
-        if (LMS.SetYourColorThing == false && TeamOrderSameAsCurrentTurn())
-        {
-            LMS.SetYourColorThing = true;
-            LMS.YourColorTurn.text = "you: yellow";
-            LMS.YourColorTurn.color = new Color32(255, 255, 0, 255);
-        }
+        
     }
     void PurpleTurnStart()
     {
         Debug.Log("Purple New Turn");
-        CurrentTeamTurn = 5;
+        LMS.CurrentTeamTurn = 5;
 
         for (int i = 0; i < localMatchIntermediateCS.LMICS.purpleC.Count; i++)
         {
@@ -2767,13 +2889,9 @@ public class LocalMatchStart : MonoBehaviour
         LMS.WhichColorTurn.text = "purple";
         LMS.WhichColorTurn.color = new Color32(255, 0, 255, 255);
 
-        if (LMS.SetYourColorThing == false && TeamOrderSameAsCurrentTurn())
-        {
-            LMS.SetYourColorThing = true;
-            LMS.YourColorTurn.text = "you: purple";
-            LMS.YourColorTurn.color = new Color32(255, 0, 255, 255);
-        }
+        
     }
+
 
     private UnityTemplateProjects.SimpleCameraController.CameraState CamS;
 
@@ -2884,9 +3002,15 @@ public class LocalMatchStart : MonoBehaviour
         if (localMatchIntermediateCS.LMICS.greenC.Count != 0) { TeamCount += 1; }
         if (localMatchIntermediateCS.LMICS.purpleC.Count != 0) { TeamCount += 1; }
 
+        TSAFuncs.Add(BlueTurnStart);
+        TSAFuncs.Add(RedTurnStart);
+        TSAFuncs.Add(GreenTurnStart);
+        TSAFuncs.Add(YellowTurnStart);
+        TSAFuncs.Add(PurpleTurnStart);
+
         if (localMatchIntermediateCS.LMICS.blueC.Count != 0)
         {
-            startTurnFunctionOrder.Add(BlueTurnStart);
+            startTurnFunctionOrder.Add(TSAFuncs[0]);
             
             Debug.Log("BLUE: " + localMatchIntermediateCS.LMICS.blueC.Count);
 
@@ -2895,7 +3019,7 @@ public class LocalMatchStart : MonoBehaviour
 
         if (localMatchIntermediateCS.LMICS.redC.Count != 0)
         {
-            startTurnFunctionOrder.Add(RedTurnStart);
+            startTurnFunctionOrder.Add(TSAFuncs[1]);
 
             Debug.Log("RED: " + localMatchIntermediateCS.LMICS.redC.Count);
 
@@ -2904,7 +3028,7 @@ public class LocalMatchStart : MonoBehaviour
 
         if (localMatchIntermediateCS.LMICS.greenC.Count != 0)
         {
-            startTurnFunctionOrder.Add(GreenTurnStart);
+            startTurnFunctionOrder.Add(TSAFuncs[2]);
             
             Debug.Log("YELLOW: " + localMatchIntermediateCS.LMICS.greenC.Count);
 
@@ -2913,7 +3037,7 @@ public class LocalMatchStart : MonoBehaviour
 
         if (localMatchIntermediateCS.LMICS.yellowC.Count != 0) //yes this is flipped
         {
-            startTurnFunctionOrder.Add(YellowTurnStart);
+            startTurnFunctionOrder.Add(TSAFuncs[3]);
             
             Debug.Log("GREEN: " + localMatchIntermediateCS.LMICS.yellowC.Count);
 
@@ -2922,12 +3046,15 @@ public class LocalMatchStart : MonoBehaviour
 
         if (localMatchIntermediateCS.LMICS.purpleC.Count != 0)
         {
-            startTurnFunctionOrder.Add(PurpleTurnStart);
+            startTurnFunctionOrder.Add(TSAFuncs[4]);
             
             Debug.Log("PURPLE: " + localMatchIntermediateCS.LMICS.purpleC.Count);
 
 
         }
+
+        SetYourTurnIdentifier();
+        
 
         //startTurnFunctionOrder
         if (StaticDataMapMaker.controlObj.LoadMapSaveDat == true)
@@ -3152,6 +3279,7 @@ public class LocalMatchStart : MonoBehaviour
                     Debug.Log("yeay");
                 }
 
+
             } // middle of ability command
 
             LMS.ShowStats(LMS.CYPos, LMS.CXPos);
@@ -3161,13 +3289,27 @@ public class LocalMatchStart : MonoBehaviour
 
     }
 
+    void BasicSendMapDataSTBlocker()
+    {
+        if (WebManage.WManage.MatchType == 1)
+        {
+            if (TeamOrderSameAsCurrentTurn())
+            {
+                // need to add in the middle checks for loading map data before action?!!?
+                if (WebManage.WManage.SendMapDataBat1Bool == false)
+                {
+                    SendMapDataNetworkBat1();
+                }
+            }
+        }
+    }
 
     void matchType1Logic()
     {
+        //Debug.Log(LMS.currentTurn);
         if (TeamOrderSameAsCurrentTurn())
         {
-            // need to add in the middle checks for loading map data before action?!!?
-            SendMapDataNetworkBat1();
+
         }
         else{
             //CheckAndLoadWebMapBat1();
@@ -3220,103 +3362,114 @@ public class LocalMatchStart : MonoBehaviour
                 LMS.CYPos = 0;
             }
 
-            if (LMS.MovePhase.MovePhase == 0)
+            if (TeamOrderSameAsCurrentTurn())
             {
-                if (Input.GetMouseButton(0))
+                if (LMS.MovePhase.MovePhase == 0)
                 {
-                    if (localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat != null && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.Dead == false && LMS.CurrentTeamTurn == localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.team && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.HasTurn == true && TeamOrderSameAsCurrentTurn())
-                    { //double barrier check for 'just in case'
+                    if (Input.GetMouseButton(0))
+                    {
+                        if (localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat != null && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.Dead == false && LMS.CurrentTeamTurn == localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.team && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.HasTurn == true)
+                        { //double barrier check for 'just in case'
+                            BasicSendMapDataSTBlocker();
 
-                        Renderer[] ComponentR;
+                            Renderer[] ComponentR;
 
-                        if (SelectedChar != null)
-                        {
+                            if (SelectedChar != null)
+                            {
+
+                                ComponentR = LMS.SelectedChar.CharObj.GetComponentsInChildren<Renderer>();
+                                for (int i = 0; i < ComponentR.GetLength(0); i++)
+                                {
+                                    ComponentR[i].material = ConstantCharObject.CCObj.matArr[SelectedChar.team - 1];
+                                }
+                            }
+
+                            SelectedChar = localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat;
 
                             ComponentR = LMS.SelectedChar.CharObj.GetComponentsInChildren<Renderer>();
                             for (int i = 0; i < ComponentR.GetLength(0); i++)
                             {
-                                ComponentR[i].material = ConstantCharObject.CCObj.matArr[SelectedChar.team - 1];
+                                ComponentR[i].material = ConstantCharObject.CCObj.Selected;
                             }
+
+                            if (SelectedChar.CharObj.GetComponent<Animator>().GetBool("Selected") == false)
+                            {
+                                SelectedChar.CharObj.GetComponent<Animator>().SetBool("Selected", true);
+                            }
+
                         }
 
-                        SelectedChar = localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat;
 
-                        ComponentR = LMS.SelectedChar.CharObj.GetComponentsInChildren<Renderer>();
-                        for (int i = 0; i < ComponentR.GetLength(0); i++)
-                        {
-                            ComponentR[i].material = ConstantCharObject.CCObj.Selected;
-                        }
+                    }
+                }
 
-                        if (SelectedChar.CharObj.GetComponent<Animator>().GetBool("Selected") == false)
-                        {
-                            SelectedChar.CharObj.GetComponent<Animator>().SetBool("Selected", true);
-                        }
+                else if (LMS.MovePhase.MovePhase == 1 && tmpVec3.x != -10000)
+                {
 
+                    LMS.WhereCanIMove();
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        LMS.MoveCharClick(LMS.CYPos, LMS.CXPos);
+                    }
+                }
+
+                else if (LMS.MovePhase.MovePhase == 2 && tmpVec3.x != -10000)
+                {
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        LMS.AttackCharClick(LMS.CYPos, LMS.CXPos);
+                    }
+
+                }
+
+                else if (LMS.MovePhase.MovePhase == 3 && tmpVec3.x != -10000)
+                {
+                    DrawRayDirection(4 * SelectedChar.PosX, 4 * SelectedChar.PosY, LMS.CXPos * 4, LMS.CYPos * 4);
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        LMS.rotateCharTheRotation(LMS.CXPos, LMS.CYPos);
+                        ArrowLineDrawer.Destroy();
                     }
 
 
                 }
-            }
 
-            else if (LMS.MovePhase.MovePhase == 1 && tmpVec3.x != -10000)
-            {
-
-                LMS.WhereCanIMove();
-
-                if (Input.GetMouseButton(0))
+                else if (LMS.MovePhase.MovePhase == 4 && tmpVec3.x != -10000)
                 {
-                    LMS.MoveCharClick(LMS.CYPos, LMS.CXPos);
+
+                    if (Input.GetMouseButton(0))
+                    {
+                        LMS.AbilityClickLogic(LMS.CXPos, LMS.CYPos);
+                        //    LMS.rotateCharTheRotation(LMS.CXPos, LMS.CYPos);
+                        //    ArrowLineDrawer.Destroy();
+                    }
+
+
                 }
-            }
-
-            else if (LMS.MovePhase.MovePhase == 2 && tmpVec3.x != -10000)
-            {
-
-                if (Input.GetMouseButton(0))
+                else if (LMS.MovePhase.MovePhase == 5)
                 {
-                    LMS.AttackCharClick(LMS.CYPos, LMS.CXPos);
-                }
 
-            }
+                    if (SelectedChar.HasTurn == false)
+                    {
+                        CloseActionMenuAndDeselect();
+                        Debug.Log("yeay");
+                    }
+                    else
+                    {
+                        BasicSendMapDataSTBlocker();
+                    }
 
-            else if (LMS.MovePhase.MovePhase == 3 && tmpVec3.x != -10000)
-            {
-                DrawRayDirection(4 * SelectedChar.PosX, 4 * SelectedChar.PosY, LMS.CXPos * 4, LMS.CYPos * 4);
+                } // middle of ability command
 
-                if (Input.GetMouseButton(0))
-                {
-                    LMS.rotateCharTheRotation(LMS.CXPos, LMS.CYPos);
-                    ArrowLineDrawer.Destroy();
-                }
-
+                LMS.ShowActionMenu(LMS.CYPos, LMS.CXPos);
 
             }
-
-            else if (LMS.MovePhase.MovePhase == 4 && tmpVec3.x != -10000)
-            {
-
-                if (Input.GetMouseButton(0))
-                {
-                    LMS.AbilityClickLogic(LMS.CXPos, LMS.CYPos);
-                    //    LMS.rotateCharTheRotation(LMS.CXPos, LMS.CYPos);
-                    //    ArrowLineDrawer.Destroy();
-                }
-
-
-            }
-            else if (LMS.MovePhase.MovePhase == 5)
-            {
-
-                if (SelectedChar.HasTurn == false)
-                {
-                    CloseActionMenuAndDeselect();
-                    Debug.Log("yeay");
-                }
-
-            } // middle of ability command
 
             LMS.ShowStats(LMS.CYPos, LMS.CXPos);
-            LMS.ShowActionMenu(LMS.CYPos, LMS.CXPos);
+
 
         }
 
