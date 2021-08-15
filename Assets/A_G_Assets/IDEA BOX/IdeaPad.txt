@@ -1,47 +1,95 @@
-IDEAS: \n
-done()?{
-- (string.replace("persistant data path)).replace(".dat") to remove trash from strings
-}
 
-todo now:
+---------------------------------------------------------------
+TODO:
+- Map downloader
+- Map uploader
+- Friendly battle join and start match - details on email
+- Images of weapons in char maker
+- More weapons
+- More hats
+- Add secondary weapons
+- Balance changes
+- Async SQL server side versus now? - dunno, something more stable
+- Fix blue tint on webgl for non blue chars
+- Fix missing grid lines for webgl
+- Fix ui not stopping selection on map below (should just flag a bool saying clicking  UI
+and nothing else can pass if this var is true in bat0 and bat1 and mapMaker)
+- To stylize I will make a background image? and add shader effects? - post processing
+- Need levels of damage animations!??!?! (light, heavy, stagger [knifes], very heavy, ect?)
 
-- // TODO: LOAD ATTACK FUNC AND SUCH, SAME FOR MOVE FUNC!
-- you can click attack even if not in range - it just shows where you can attack with bar animated square thing
+---------------------------------------------------------------
 
-- : Repopulate Menu Items
-- need to also add range of pri weapon to printer - range of primary only - put secondary as question mark
+---------------------------------------------------------------
+To Add weapons: Light Sword
+To Add Anim:
+
+To Make Model:
+
+---------------------
+To Add weapons: Long Stab [kanata style] Sword
+To Add Anim:
+
+To Make Model:
+
+---------------------
+To Add weapons: Heavy Sword [kanata style] Sword
+To Add Anim:
+
+To Make Model:
+
+---------------------
+To Add weapons: Thrusting Sword [kanata style] Sword
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: Spear type 
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: Dagger type [also has throwing]
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: shield type 
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: Mace type 
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: Recurve Bow type 
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: Long Bow type 
+To Add Anim:
+
+To Make Model:
+
+---------------------
+TO ADD weapons: Axe type 
+To Add Anim:
+
+To Make Model:
+
+---------------------
 
 
+---------------------------------------------------------------
+Jibber Jabber:
+titan 3 7
 
-- need to draw map once I pass through, add moving cam, and draw char with hat 
-- need to do body stuff
-- need to make a mid sequence to take in info to pass into LocalMatch-Phase Scene
-- draw char with hat and body armor once loaded as well, remove placeholder item with char - highlight them with shader of color so you know the team they are apart of 
-        //TODO: retrive HP, atk, move, ect values once I add them
-(need to load chars and look at em and make sure you selected all chars - you then select to pass file path - then I need to move all into corrsponding vector of charData
-- delete all char and hat and body objects from main thinggy so I can load battle scene
-
-
-
-- NEED TO ALSO ADD STATS and make the BATTLE THING
-
-1. weapon system: email has more info
-
-you have primary and secondary weapons for each weapon type:
-- primary weapon slot can use primary and secondary weapons of selected type (like swords)
-- secondary weapon slot can use secondary weapons of selected type (like daggers)
-This way we have a simple weapon equip and class system 
-
-we can also allow 1 item [ignore for now]? - then simple inventory system is made!
-- stats are based on primary weapon
-- secondary weapon is essentially just for another wepon with stats -- all wepaons reduce stats
-
-
-we have HP, atk, def, spd, and (result of all the above maybe? dodge?)
-
-
-
-
-
-titan 7
-
+---------------------------------------------------------------
