@@ -39,6 +39,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MapNameLocalMatchSelect.unity
     guid: c5ca7bfb3eff8564282cee08e6d9e84e
   - enabled: 1
+    path: Assets/Scenes/LoadMapEdit.unity
+    guid: d387bd60a12b37e4a9a11dff42ed08ff
+  - enabled: 1
     path: Assets/Scenes/Match1WaitMenu.unity
     guid: ef30db2c74de68448afea5ddab34ca73
   - enabled: 1
@@ -50,4 +53,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RandomOnlinePregame.unity
     guid: 374cb9c65a7f2d342ae9d2a55cf20260
+  - enabled: 1
+    path: Assets/Scenes/BattleChoices.unity
+    guid: 70bc809514853b94c8e44958d1fd2663
+  - enabled: 1
+    path: Assets/Scenes/MapMakerChoiceScene.unity
+    guid: 2af38738f8688d442af591518cc02349
+  - enabled: 1
+    path: Assets/Scenes/FriendBatChoice.unity
+    guid: 0bfe4400cf87a9e40870ff85ccfb13a9
   m_configObjects: {}

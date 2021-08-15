@@ -67,8 +67,7 @@ public class DrawGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GridLines = this;
-
+        
         if (GridLines == null)
         {
             GridLines = this;

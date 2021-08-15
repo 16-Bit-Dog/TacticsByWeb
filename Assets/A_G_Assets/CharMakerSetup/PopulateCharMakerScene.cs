@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using System.Reflection;
 
 public class PopulateCharMakerScene : MonoBehaviour
 {
@@ -39,15 +41,11 @@ public class PopulateCharMakerScene : MonoBehaviour
 	{
 		Ml.indexClicked = i;
 
-		Debug.Log("Loaded Save");
+		Debug.Log("Loaded Save Char Dat");
 		//
 
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file =
-				   File.Open(files[i], FileMode.Open);
-		StaticDataMapMaker.SaveCharData data = (StaticDataMapMaker.SaveCharData)bf.Deserialize(file);
-		file.Close();
-		
+		StaticDataMapMaker.SaveCharData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveCharData>(File.ReadAllText(files[i]));
+
 		StaticDataMapMaker.controlObj.CharPassPW = data.pW;
 		StaticDataMapMaker.controlObj.CharPassSW = data.sW;
 		StaticDataMapMaker.controlObj.CharPassCH = data.cH;

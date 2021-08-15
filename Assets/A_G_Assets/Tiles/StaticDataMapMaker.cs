@@ -13,19 +13,19 @@ public class StaticDataMapMaker : MonoBehaviour
     //StaticDataMapMaker.controlObj
 
     int ClientID;
-    
-    int GameModeType = 0; //standart non online
-    //1 means random match online without save data - only timer and online
-    //2 is long match 
-    //3 is ?
 
-    
+    int GameModeType = 0; //standart non online
+                          //1 means random match online without save data - only timer and online
+                          //2 is long match 
+                          //3 is ?
+
+
     public void DrawTileStats(TileLookUp.TilesC tile, TMP_Text TextMod)
     {
         TextMod.text = "Tile: " + tile.name + "\nAtk: " + tile.Atk + "\nDef: " + tile.Def + "\nMov: " + tile.MoveCost;
         //add if and  += for other stats here
 
-        if(tile.AtkBuffInitial != 0)
+        if (tile.AtkBuffInitial != 0)
         {
 
             TextMod.text += "\nAtk Buff [StandOn]: " + tile.AtkBuffInitial;
@@ -79,8 +79,8 @@ public class StaticDataMapMaker : MonoBehaviour
 
     public void LoadRandBattle()
     {
-        if (WebManage.WManage.id != 0) 
-        { 
+        if (WebManage.WManage.id != 0)
+        {
             WebManage.WManage.RandomMatch = true;
             SceneManager.LoadScene("Rand_Battle_Wait");
         }
@@ -88,7 +88,7 @@ public class StaticDataMapMaker : MonoBehaviour
 
     public void LoadLoginMenu()
     {
-        
+
         SceneManager.LoadScene("Login");
 
     }
@@ -100,6 +100,23 @@ public class StaticDataMapMaker : MonoBehaviour
         SceneManager.LoadScene("Main");
 
     }
+    public void LoadMapMakerChoiceScene()
+    {
+        SceneManager.LoadScene("MapMakerChoiceScene");
+    }
+    
+
+    public void LoadBattleChoices()
+    {
+        SceneManager.LoadScene("BattleChoices");
+    }
+
+    public void LoadFriendliesBattleTypes(){
+        
+        SceneManager.LoadScene("FriendBatChoice");
+
+    }
+
     public void LoadMainClearRandomMatch()
     {
         WebManage.WManage.FoundMatch = false;
