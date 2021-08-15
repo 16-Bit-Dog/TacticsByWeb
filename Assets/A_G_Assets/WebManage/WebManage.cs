@@ -625,7 +625,7 @@ public class WebManage : MonoBehaviour
 
     async void Connect()
     {
-        cws = new WebSocket("ws://174.95.213.15:81/", "null");
+        cws = new WebSocket("ws://142.113.123.191:81/", "null");
 
 
         cws.OnOpen += () =>

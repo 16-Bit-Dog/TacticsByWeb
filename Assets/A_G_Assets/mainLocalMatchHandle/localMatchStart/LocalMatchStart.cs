@@ -330,7 +330,10 @@ public class LocalMatchStart : MonoBehaviour
     {
         for (int i = 0; i < CharDataIn.Count; i++)
         {
+            Debug.Log("Char Passed Load Into: " + i.ToString());
+
             localMatchIntermediateCS.CharDat tmp = new localMatchIntermediateCS.CharDat();
+
             CharData.Add(tmp);
 
             CharData[i].HasTurn = CharDataIn[i].HasTurn;
@@ -425,6 +428,7 @@ public class LocalMatchStart : MonoBehaviour
                 }
             }
         }
+        CharData.Clear();
     }
 
     public void DeleteAllCharArraysLogic()
@@ -593,7 +597,7 @@ public class LocalMatchStart : MonoBehaviour
             LoadCharsInto(localMatchIntermediateCS.LMICS.greenC, data.GreenChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.purpleC, data.PurpleChar);
         }
-        catch { Debug.Log("Failed to Load CharData into arrays"); }
+        catch { Debug.Log("Failed to Load CharData into arrays - map:\n"+ JsonString); }
         try { 
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.blueC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.redC, localMatchIntermediateCS.LMICS.TilesArray);
@@ -601,7 +605,7 @@ public class LocalMatchStart : MonoBehaviour
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.greenC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.purpleC, localMatchIntermediateCS.LMICS.TilesArray);
         }
-        catch { Debug.Log("Failed to Load CharData into map"); }
+        catch { Debug.Log("Failed to Load CharData into map - map:\n"+ JsonString); }
 
             try
             {
@@ -621,6 +625,8 @@ public class LocalMatchStart : MonoBehaviour
                 }
             }
             catch { Debug.Log("Failed to Load selected Char"); }
+
+            LMS.TurnCountText.text = "" + (((LMS.currentTurn - 1) / LMS.TeamCount)); //set turn count visual
         }
     }
 
@@ -783,6 +789,9 @@ public class LocalMatchStart : MonoBehaviour
     {
         for (int i = 0; i < CharData.Count; i++)
         {
+
+            Debug.Log("Char Passed Load Into Match Start: "+i.ToString());
+
             localMatchIntermediateCS.InFlightCharData tmp = new localMatchIntermediateCS.InFlightCharData();
 
             CharDataIn.Add(tmp);
@@ -1437,6 +1446,10 @@ public class LocalMatchStart : MonoBehaviour
             }
             else if(WebManage.WManage.MatchType == 1)
             {
+                if(WebManage.WManage.SendMapDataBat1Bool == true)
+                {
+                    WebManage.WManage.SendMapDataBat1Bool = false;
+                }
                 SendMapDataNetworkBat1();
             }
         }
