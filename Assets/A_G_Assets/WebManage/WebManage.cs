@@ -6,11 +6,20 @@ using System.Threading;
 //using System.Net.WebSockets;
 using System;
 using System.IO;
-
 using NativeWebSocket;
+using Newtonsoft.Json;
+using System.IO;
+using System.Reflection;
 
 public class WebManage : MonoBehaviour
-{ //use websocket 81 
+{ //use websocket 81
+  //
+    public bool MoveToWaiting = false;
+    public bool TryToJoinFriend = false;
+    public uint TryToJoinFriendVar = 0;
+
+    public bool GiveMapDataFriendlies = false;
+
     public bool GivenMapData = false;
 
     stringC rs = new stringC();
@@ -89,6 +98,22 @@ public class WebManage : MonoBehaviour
     IEnumerator logicWS;
 
     int TurnToPick = 0;
+
+
+    int TeamCountGetter(stringC FileString)
+    {
+        localMatchIntermediateCS.LocalMatchSaveMapData data = JsonConvert.DeserializeObject<localMatchIntermediateCS.LocalMatchSaveMapData>(FileString.s);
+
+        int teamCount = 0;
+
+        if(data.BlueChar.Count != 0) teamCount++;
+        if (data.RedChar.Count != 0) teamCount++;
+        if (data.YellowChar.Count != 0) teamCount++;
+        if (data.GreenChar.Count != 0) teamCount++;
+        if (data.PurpleChar.Count != 0) teamCount++;
+
+        return teamCount;
+    }
 
     //Uri u = new Uri("ws://174.95.213.15:81/");
     WebSocket cws = null;
@@ -467,6 +492,114 @@ public class WebManage : MonoBehaviour
 
                     Debug.Log("team Order first time sent");
                 }
+                else if(GiveMapDataFriendlies == true)
+                {
+                    GiveMapDataFriendlies = false;
+
+                    cws.SendText("GMDF");
+                    //
+                    JsonSendS.s = File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath);
+                    //
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; }
+
+                    cws.SendText(TeamCountGetter(JsonSendS).ToString()); // player count
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; }
+
+                    cws.SendText(JsonSendS.s.Length.ToString()); // map send
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; }
+
+                    cws.SendText(JsonSendS.s); // map send
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+                    
+                    result.s = "f";
+                    while(result.s == "f")
+                    {
+                        GetMessS(result);
+                        while (sentData == true) { yield return null; };
+
+                    }
+
+                    MatchType = 1;
+
+                    GetMessS(JsonReceiveS); // GOT MAP
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText("f");
+
+                    GetMessS(result); // GOT MAP
+                    while (sentData == true) { yield return null; };
+
+                    TeamOrder = UInt32.Parse(result.s);
+
+                    StaticDataMapMaker.controlObj.LoadMapDatPath = "UOT";
+
+                    FoundMatch = true;
+                    //now loadmap -
+                    
+                    cws.SendText("f");
+
+                }
+                else if (TryToJoinFriend == true)
+                {
+                    GiveMapDataFriendlies = false;
+
+                    cws.SendText("JFMS");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; }
+
+                    cws.SendText(TryToJoinFriendVar.ToString());
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; }
+
+                    if(result.s == "BAD")
+                    {
+                        MoveToWaiting = false; 
+                        Debug.Log("No Player To Join");
+                    }
+                    else
+                    {
+                        MoveToWaiting = true;
+                        Debug.Log("Ready to join a Player");
+
+                        while (result.s == "g")
+                        {
+                            GetMessS(result); // GOT MAP
+                            while (sentData == true) { yield return null; };
+                        }
+
+                        MatchType = 1;
+
+                        GetMessS(JsonReceiveS); // GOT MAP
+                        while (sentData == true) { yield return null; };
+
+                        cws.SendText("f");
+
+                        GetMessS(result); // GOT MAP
+                        while (sentData == true) { yield return null; };
+
+                        TeamOrder = UInt32.Parse(result.s);
+
+
+                        StaticDataMapMaker.controlObj.LoadMapDatPath = "UOT";
+                        FoundMatch = true;
+                        //now loadmap -
+
+                        cws.SendText("f");
+
+                        //now loadmap -
+                    }
+
+                }
+
                 else if (NeedToSendCharsRandomChar == true) 
                 {
                     Debug.Log("SentCharDat");

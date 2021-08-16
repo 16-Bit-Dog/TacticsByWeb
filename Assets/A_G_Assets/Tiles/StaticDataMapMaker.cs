@@ -77,6 +77,11 @@ public class StaticDataMapMaker : MonoBehaviour
 
     }
 
+    public void LoadFriendliesGetMapName()
+    {
+        SceneManager.LoadScene("MapNameFriendlies");
+    }
+
     public void LoadRandBattle()
     {
         if (WebManage.WManage.id != 0)
@@ -84,6 +89,13 @@ public class StaticDataMapMaker : MonoBehaviour
             WebManage.WManage.RandomMatch = true;
             SceneManager.LoadScene("Rand_Battle_Wait");
         }
+    }
+
+    public void LoadBattleContinueLoad()
+    {
+
+        SceneManager.LoadScene("ContinueBattleLoad");
+
     }
 
     public void LoadLoginMenu()
@@ -100,6 +112,17 @@ public class StaticDataMapMaker : MonoBehaviour
         SceneManager.LoadScene("Main");
 
     }
+
+    public void LoadFriendJoin()
+    {
+        SceneManager.LoadScene("Join_Friend");
+    }
+
+    public void LoadFriendMakeMatchGetMap()
+    {
+        SceneManager.LoadScene("SelectMapForFriendMatch");
+    }
+
     public void LoadMapMakerChoiceScene()
     {
         SceneManager.LoadScene("MapMakerChoiceScene");
@@ -197,6 +220,8 @@ public class StaticDataMapMaker : MonoBehaviour
         DrawTileStats(TileLookUp.TLU.Tiles[controlObj.DrawSTile], MapMakerMakerScript.MMSS.TileInfoText);
 
     }
+
+
 
     public void ClearCharSelect()
     {

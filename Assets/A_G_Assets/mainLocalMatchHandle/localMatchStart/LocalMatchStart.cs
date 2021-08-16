@@ -6,9 +6,9 @@ using TMPro;
 using UnityEngine.Animations;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
+using System.IO;
 using System.Reflection;
 
 public class LocalMatchStart : MonoBehaviour

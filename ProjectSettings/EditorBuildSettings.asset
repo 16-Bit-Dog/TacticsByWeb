@@ -9,57 +9,81 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: ace4e8f3e9cb1874e9fb81721bf5466d
   - enabled: 1
-    path: Assets/Scenes/BattleType1StartTrue.unity
+    path: Assets/Scenes/Battles/BattleChoice1Generic/BattleType1StartTrue.unity
     guid: 405ff90a7700a7c40ade0614745c986b
   - enabled: 1
-    path: Assets/Scenes/CharacterMakerMaker.unity
+    path: Assets/Scenes/CharMaker/CharacterMakerMaker.unity
     guid: ec2dee6c9977fc5408cb725f4a28119e
   - enabled: 1
-    path: Assets/Scenes/CharacterMakerSelectScene.unity
+    path: Assets/Scenes/CharMaker/CharacterMakerSelectScene.unity
     guid: b9155ded4b340ef4b861ffcb1586f5cf
   - enabled: 1
-    path: Assets/Scenes/LocalMatchInner.unity
+    path: Assets/Scenes/Battles/LocalMatch/LocalMatchInner.unity
     guid: 006774ec4e034a54ead2e013c1243b76
   - enabled: 1
-    path: Assets/Scenes/LocalMatchMapMidWayLoad.unity
+    path: Assets/Scenes/Battles/LocalMatch/LocalMatchMapMidWayLoad.unity
     guid: 95250d068c07cc24e8a85da55b272c16
   - enabled: 1
-    path: Assets/Scenes/LocalMatchMapSelect.unity
+    path: Assets/Scenes/Battles/LocalMatch/LocalMatchMapSelect.unity
     guid: 9df99eddfe4282b4c9e26ab6665cb613
+  - enabled: 1
+    path: Assets/Scenes/Battles/FriendBat/Create_Friend_Match/MapNameFriendlies.unity
+    guid: 14b7f4625fddb0643af3908461fb49cb
   - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: c39e892e9c7fef54f8e0c582a0cd4eb1
   - enabled: 1
-    path: Assets/Scenes/MapMaker_Maker.unity
+    path: Assets/Scenes/MapMaking/MapMaker_Maker.unity
     guid: c9ecbf8f2531ae84e8034d5b05b5e931
   - enabled: 1
-    path: Assets/Scenes/MapMaker_Scene.unity
+    path: Assets/Scenes/Battles/FriendBat/FriendBatPreGame.unity
+    guid: 964a65a7a7667cf4ab4d5ee397a21b68
+  - enabled: 1
+    path: Assets/Scenes/Battles/FriendBat/Join_Friend/Join_Friend.unity
+    guid: 81412c40ca33b374fb0dfedd84e62e2d
+  - enabled: 1
+    path: Assets/Scenes/MapMaking/MapMaker_Scene.unity
     guid: 9f5aca02bce686a41af0273571b7bd3f
   - enabled: 1
-    path: Assets/Scenes/MapNameLocalMatchSelect.unity
+    path: Assets/Scenes/Battles/FriendBat/Join_Friend/FriendBatWaitingRoom.unity
+    guid: ddab4d23445b25e4a8e3a824c209faa9
+  - enabled: 1
+    path: Assets/Scenes/Battles/LocalMatch/MapNameLocalMatchSelect.unity
     guid: c5ca7bfb3eff8564282cee08e6d9e84e
   - enabled: 1
-    path: Assets/Scenes/LoadMapEdit.unity
+    path: Assets/Scenes/Battles/FriendBat/Create_Friend_Match/FriendliesMapNameSetter.unity
+    guid: 6377b715bb1817a48b58652baf2f340e
+  - enabled: 1
+    path: Assets/Scenes/Battles/ContinueBattleLoad/ContinueBattleLoad.unity
+    guid: 720cf2040faacc0428aae4f5ab8262a9
+  - enabled: 1
+    path: Assets/Scenes/MapMaking/LoadMapEdit.unity
     guid: d387bd60a12b37e4a9a11dff42ed08ff
   - enabled: 1
-    path: Assets/Scenes/Match1WaitMenu.unity
+    path: Assets/Scenes/Battles/BattleChoice1Generic/Match1WaitMenu.unity
     guid: ef30db2c74de68448afea5ddab34ca73
   - enabled: 1
-    path: Assets/Scenes/Rand_Battle_Wait.unity
+    path: Assets/Scenes/Battles/RandBattleWaits/Rand_Battle_Wait.unity
     guid: 162997e2eeca31c4aacdc67242687ae8
   - enabled: 1
-    path: Assets/Scenes/LocalMatchStart.unity
+    path: Assets/Scenes/Battles/GeneralAllMap/LocalMatchStart.unity
     guid: 488884d1dde491245b5eff009b2118c3
   - enabled: 1
-    path: Assets/Scenes/RandomOnlinePregame.unity
+    path: Assets/Scenes/Battles/RandBattleWaits/RandomOnlinePregame.unity
     guid: 374cb9c65a7f2d342ae9d2a55cf20260
   - enabled: 1
-    path: Assets/Scenes/BattleChoices.unity
+    path: Assets/Scenes/Battles/FriendBat/Create_Friend_Match/ShowIDAndWaitForFriends.unity
+    guid: 04f315f5d9c9b4a448b43f8fa4029601
+  - enabled: 1
+    path: Assets/Scenes/Battles/BattleChoices.unity
     guid: 70bc809514853b94c8e44958d1fd2663
   - enabled: 1
-    path: Assets/Scenes/MapMakerChoiceScene.unity
+    path: Assets/Scenes/Battles/FriendBat/Create_Friend_Match/SelectMapForFriendMatch.unity
+    guid: 03ce2ed8da506a948a93ffa1ce0c4733
+  - enabled: 1
+    path: Assets/Scenes/MapMaking/MapMakerChoiceScene.unity
     guid: 2af38738f8688d442af591518cc02349
   - enabled: 1
-    path: Assets/Scenes/FriendBatChoice.unity
+    path: Assets/Scenes/Battles/FriendBat/FriendBatChoice.unity
     guid: 0bfe4400cf87a9e40870ff85ccfb13a9
   m_configObjects: {}

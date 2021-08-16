@@ -1,0 +1,4 @@
+
+
+
+if(FoundMatch == true){ load map with WebManage.WManage.JsonReceive - change up FriendBatPreGame}

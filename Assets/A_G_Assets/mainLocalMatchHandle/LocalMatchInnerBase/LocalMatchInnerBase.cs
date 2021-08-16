@@ -326,7 +326,7 @@ public class LocalMatchInnerBase : MonoBehaviour
 
         LMIB.UnorderedCharMess[LMIB.selectionSpots] = new CharDat();
         //load CharFilePath THEN do rest of loading
-
+        
         StaticDataMapMaker.SaveCharData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveCharData>(File.ReadAllText(CharFilePath));
 
 
@@ -547,9 +547,12 @@ public class LocalMatchInnerBase : MonoBehaviour
         {
             Debug.Log("Still Writing - DEAD");
         }
-
+        if(StaticDataMapMaker.controlObj.LoadMapDatPath != "UOT")
         StaticDataMapMaker.SaveMapData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath));
-
+        else
+        {
+            StaticDataMapMaker.SaveMapData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(WebManage.WManage.JsonReceiveS.s);
+        }
         
         StaticDataMapMaker.controlObj.MapName = data.MapName;
         StaticDataMapMaker.controlObj.MapWidth = data.MapWidth;

@@ -6,10 +6,10 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MapLocalMatchLoad : MonoBehaviour
-{//remember to instantiate new objects such that it follows the row logic
+public class MapFriendliesLoadMap : MonoBehaviour
+{
 
-	static MapLocalMatchLoad Ml;
+	static MapFriendliesLoadMap Ml;
 
 	public GameObject SettingsForAllTEXT;
 
@@ -21,6 +21,7 @@ public class MapLocalMatchLoad : MonoBehaviour
 
 	void Start()
 	{
+
 		Ml = this;
 		Populate();
 		StaticDataMapMaker.controlObj.LoadMapDat = false;
@@ -39,15 +40,15 @@ public class MapLocalMatchLoad : MonoBehaviour
 
 		StaticDataMapMaker.controlObj.LoadMapDatPath = files[i];
 		StaticDataMapMaker.controlObj.LoadMapDat = true;
-		Debug.Log("Loaded Save");
+		Debug.Log("Loaded Map");
 		//
 
 
 		//load "TilesArrayID" stats
-		SceneManager.LoadScene("LocalMatchInner");
-	}//StaticDataMapMaker.controlObj.saveMapDatString <- map name
+		SceneManager.LoadScene("ShowIDAndWaitForFriends"); //loads map
+	} //StaticDataMapMaker.controlObj.saveMapDatString <- map name
 
-	void Populate()
+void Populate()
 	{
 
 		if (Directory.Exists(Application.persistentDataPath
@@ -72,12 +73,12 @@ public class MapLocalMatchLoad : MonoBehaviour
 
 			}
 
-			if(files.GetLength(0) == 0)
-            {
+			if (files.GetLength(0) == 0)
+			{
 				privTmp = new GameObject[1];
 				privTmp[0] = new GameObject();
 				privTmp[0] = Instantiate(SettingsForAllTEXT, transform);
-				privTmp[0].GetComponent<TMP_Text>().text = "create a map before you try to edit a map!";
+				privTmp[0].GetComponent<TMP_Text>().text = "create a map before you try to play a map!";
 			}
 
 
