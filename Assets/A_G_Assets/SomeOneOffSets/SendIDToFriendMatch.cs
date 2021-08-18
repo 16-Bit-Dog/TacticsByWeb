@@ -18,7 +18,6 @@ public class SendIDToFriendMatch : MonoBehaviour
 
     void Start()
     {
-        WebManage.WManage.GiveMapDataFriendlies = true;
 
         inputFieldN = this.GetComponent<TMP_InputField>();
 
@@ -27,10 +26,12 @@ public class SendIDToFriendMatch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        try{
         WebManage.WManage.TryToJoinFriendVar = UInt32.Parse(inputFieldN.text);
+        }
+        catch{}
 
-        if (WebManage.WManage.MoveToWaiting = true)
+        if (WebManage.WManage.MoveToWaiting == true)
         {
             WebManage.WManage.MoveToWaiting = false;
             SceneManager.LoadScene("FriendBatWaitingRoom");

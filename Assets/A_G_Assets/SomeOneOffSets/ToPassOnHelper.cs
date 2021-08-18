@@ -17,6 +17,7 @@ public class ToPassOnHelper : MonoBehaviour
     {
         if (WebManage.WManage.FoundMatch)
         {
+            WebManage.WManage.FoundMatch = false;
             SceneManager.LoadScene("FriendBatPreGame");
         }
     }

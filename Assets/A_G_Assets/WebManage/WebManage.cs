@@ -102,17 +102,25 @@ public class WebManage : MonoBehaviour
 
     int TeamCountGetter(stringC FileString)
     {
-        localMatchIntermediateCS.LocalMatchSaveMapData data = JsonConvert.DeserializeObject<localMatchIntermediateCS.LocalMatchSaveMapData>(FileString.s);
+        StaticDataMapMaker.SaveMapData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(FileString.s);
 
-        int teamCount = 0;
+        Dictionary<int, int> dt = new Dictionary<int, int>();
+        
+        for (int i = 0; i < data.MapHeight; i++)
+        {
+            
+            for (int ii = 0; ii < data.MapWidth; ii++)
+            {
+             if(data.TilesArrayID[i][ii].Overlap != 0 && dt.ContainsKey(data.TilesArrayID[i][ii].Overlap) == false)
+                {
+                    dt[data.TilesArrayID[i][ii].Overlap] = 1;
+                }   
+             
 
-        if(data.BlueChar.Count != 0) teamCount++;
-        if (data.RedChar.Count != 0) teamCount++;
-        if (data.YellowChar.Count != 0) teamCount++;
-        if (data.GreenChar.Count != 0) teamCount++;
-        if (data.PurpleChar.Count != 0) teamCount++;
+            }
+        }
 
-        return teamCount;
+        return dt.Count;
     }
 
     //Uri u = new Uri("ws://174.95.213.15:81/");
@@ -503,6 +511,9 @@ public class WebManage : MonoBehaviour
                     GetMessS(result);
                     while (sentData == true) { yield return null; }
 
+                    //Debug.Log(JsonSendS.s);
+                    //Debug.Log("Team Count: " + TeamCountGetter(JsonSendS).ToString());
+
                     cws.SendText(TeamCountGetter(JsonSendS).ToString()); // player count
 
                     GetMessS(result);
@@ -548,13 +559,14 @@ public class WebManage : MonoBehaviour
                 }
                 else if (TryToJoinFriend == true)
                 {
-                    GiveMapDataFriendlies = false;
+                    TryToJoinFriend = false;
 
                     cws.SendText("JFMS");
 
                     GetMessS(result);
                     while (sentData == true) { yield return null; }
 
+                    Debug.Log(TryToJoinFriendVar.ToString());
                     cws.SendText(TryToJoinFriendVar.ToString());
 
                     GetMessS(result);
@@ -570,21 +582,34 @@ public class WebManage : MonoBehaviour
                         MoveToWaiting = true;
                         Debug.Log("Ready to join a Player");
 
+                        cws.SendText("f");
+                        
+                        result.s = "g";
+                        
                         while (result.s == "g")
                         {
+                            Debug.Log("waiting loop g");
                             GetMessS(result); // GOT MAP
                             while (sentData == true) { yield return null; };
+
+                            cws.SendText("f");
+                        
                         }
+                        Debug.Log("done waiting loop g");
 
                         MatchType = 1;
 
                         GetMessS(JsonReceiveS); // GOT MAP
                         while (sentData == true) { yield return null; };
+                        
+                        //Debug.Log(JsonReceiveS.s);
 
                         cws.SendText("f");
 
-                        GetMessS(result); // GOT MAP
+                        GetMessS(result); // GOT team order
                         while (sentData == true) { yield return null; };
+
+                        //Debug.Log(result.s);
 
                         TeamOrder = UInt32.Parse(result.s);
 

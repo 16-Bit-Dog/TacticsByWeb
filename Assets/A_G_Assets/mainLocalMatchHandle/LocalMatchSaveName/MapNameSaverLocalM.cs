@@ -17,4 +17,9 @@ public class MapNameSaverLocalM : MonoBehaviour
     {
         StaticDataMapMaker.controlObj.saveMapDatString = inputFieldN.text;
     }
+
+    public void SendIDToJoinF()
+    {
+        WebManage.WManage.TryToJoinFriend = true;
+    }
 }

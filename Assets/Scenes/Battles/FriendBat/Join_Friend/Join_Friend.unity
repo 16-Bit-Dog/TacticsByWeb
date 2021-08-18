@@ -474,9 +474,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8477888761082844147, guid: 780b663524c08844f80cfd6839ce1c50, type: 3}
-        m_TargetAssemblyTypeName: StaticDataMapMaker, Assembly-CSharp
-        m_MethodName: LoadFriendMakeMatchGetMap
+      - m_Target: {fileID: 2032589542}
+        m_TargetAssemblyTypeName: SendIDToFriendMatch, Assembly-CSharp
+        m_MethodName: FriendBatStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1430,9 +1430,8 @@ GameObject:
   - component: {fileID: 2032589540}
   - component: {fileID: 2032589542}
   - component: {fileID: 2032589539}
-  - component: {fileID: 2032589538}
   m_Layer: 5
-  m_Name: MapName
+  m_Name: joinInputB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1458,18 +1457,6 @@ RectTransform:
   m_AnchoredPosition: {x: -135.9, y: 46.2}
   m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2032589538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032589536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b6d1ac822e16c947a6d7fff54fec270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2032589539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1518,14 +1505,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 4
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 1
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 4
+  m_CharacterValidation: 2
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 30

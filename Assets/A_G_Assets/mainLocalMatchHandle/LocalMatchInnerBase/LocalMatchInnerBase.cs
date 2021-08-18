@@ -545,13 +545,18 @@ public class LocalMatchInnerBase : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Still Writing - DEAD");
+            Debug.Log("Still Writing - DEAD OR - UOT");
         }
-        if(StaticDataMapMaker.controlObj.LoadMapDatPath != "UOT")
-        StaticDataMapMaker.SaveMapData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath));
+
+        StaticDataMapMaker.SaveMapData data;
+
+        if (StaticDataMapMaker.controlObj.LoadMapDatPath != "UOT")
+        {
+            data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath));
+        }
         else
         {
-            StaticDataMapMaker.SaveMapData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(WebManage.WManage.JsonReceiveS.s);
+            data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(WebManage.WManage.JsonReceiveS.s);
         }
         
         StaticDataMapMaker.controlObj.MapName = data.MapName;

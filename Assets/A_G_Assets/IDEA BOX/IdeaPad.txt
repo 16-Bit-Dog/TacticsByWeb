@@ -16,6 +16,7 @@ TODO:
 and nothing else can pass if this var is true in bat0 and bat1 and mapMaker)
 - To stylize I will make a background image? and add shader effects? - post processing
 - Need levels of damage animations!??!?! (light, heavy, stagger [knifes], very heavy, ect?)
+- add in optional win condition which ends turn of player if they spend too long and timer == 0 (make optional turn timer)
 
 ---------------------------------------------------------------
 
@@ -86,6 +87,7 @@ To Add Anim:
 To Make Model:
 
 ---------------------
+
 
 
 ---------------------------------------------------------------

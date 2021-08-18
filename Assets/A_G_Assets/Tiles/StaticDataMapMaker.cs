@@ -79,7 +79,10 @@ public class StaticDataMapMaker : MonoBehaviour
 
     public void LoadFriendliesGetMapName()
     {
+        if(WebManage.WManage.id !=0)
+        {
         SceneManager.LoadScene("MapNameFriendlies");
+        }
     }
 
     public void LoadRandBattle()
@@ -115,7 +118,10 @@ public class StaticDataMapMaker : MonoBehaviour
 
     public void LoadFriendJoin()
     {
+        if(WebManage.WManage.id != 0)
+        {
         SceneManager.LoadScene("Join_Friend");
+        }
     }
 
     public void LoadFriendMakeMatchGetMap()
