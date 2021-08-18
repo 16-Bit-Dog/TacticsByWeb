@@ -519,21 +519,24 @@ public class WebManage : MonoBehaviour
                     GetMessS(result);
                     while (sentData == true) { yield return null; }
 
-                    cws.SendText(JsonSendS.s.Length.ToString()); // map send
+                    cws.SendText(JsonSendS.s.Length.ToString()); // map size send
 
                     GetMessS(result);
                     while (sentData == true) { yield return null; }
 
                     cws.SendText(JsonSendS.s); // map send
 
-                    GetMessS(result);
-                    while (sentData == true) { yield return null; };
-                    
+
+                    //GetMessS(result);
+                    //while (sentData == true) { yield return null; };
+                  //  Debug.Log("start waiting");
                     result.s = "f";
+
                     while(result.s == "f")
                     {
                         GetMessS(result);
                         while (sentData == true) { yield return null; };
+                        cws.SendText("f"); // map send
 
                     }
 
@@ -544,7 +547,8 @@ public class WebManage : MonoBehaviour
 
                     cws.SendText("f");
 
-                    GetMessS(result); // GOT MAP
+                    //Debug.Log("GotMap");
+                    GetMessS(result); // GOT team order!
                     while (sentData == true) { yield return null; };
 
                     TeamOrder = UInt32.Parse(result.s);
