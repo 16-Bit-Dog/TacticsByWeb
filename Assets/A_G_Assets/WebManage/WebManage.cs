@@ -275,12 +275,15 @@ public class WebManage : MonoBehaviour
 
                 if (id == 0)
                 { //get tmp id - reserved from 1 bill and onward
-
+                    
                     cws.SendText("TID");
 
                     GetMessS(result);
+                    while (sentData == true) { yield return null; 
+                    Debug.Log("TID Reciving ID!");
+                    };
 
-                    while (sentData == true) { yield return null; };
+                    cws.SendText("TID");
 
                     Debug.Log("CreateRUID");
 
@@ -385,10 +388,10 @@ public class WebManage : MonoBehaviour
                         Debug.Log("sentData Create Acc");
 
                         GetMessS(result);
-
+                        while (sentData == true) { yield return null; };
+                        
                         Debug.Log("GotData Create Acc");
 
-                        while (sentData == true) { yield return null; };
 
                         Debug.Log("Got: " + result.s);
 
@@ -787,13 +790,41 @@ public class WebManage : MonoBehaviour
 
     async void Connect()
     {
-        cws = new WebSocket("ws://142.113.123.191:81/", "null");
+        if(wtca != null){
+        StopCoroutine(wtca);
+        }
 
+        cws = new WebSocket("ws://142.113.123.191:81/", "null");
 
         cws.OnOpen += () =>
         {
             logicWS = logicM();
             StartCoroutine(logicWS);
+        };
+
+        cws.OnClose += (msg) =>
+        {
+            StopCoroutine(logicWS);
+
+            GivenMapData = false;
+            StartMatchTToggle1 = false;
+            NeedToSendCharsRandomChar = false;
+            sentData = false;
+            ErrorAquired = false;
+            GetLoginID = false;
+            id = 0;
+            wait = false;
+            LoginUsername = "";
+            LoginPassword = "";
+            Username = "";
+            email = "";
+            CreateNewAccountBool = false;
+            RandomMatch = false;
+            SendMapDataBat1Bool = false;
+            GetMapDataBat1Bool = false;
+            FoundMatch = false;
+            TeamOrder = 100;
+            StaticDataMapMaker.controlObj.LoadMapDatPath = "";
         };
 
         cws.Connect();//may need await
@@ -809,20 +840,16 @@ public class WebManage : MonoBehaviour
             frame++;
             yield return null;
         }
-
         Connect();
         wait = false;
         yield return null;
     }
+    IEnumerator wtca;// = WaitToConnectAgain();
 
     void Update()
     {
 
-#if !UNITY_WEBGL || UNITY_EDITOR
 
-        cws.DispatchMessageQueue(); //handle 1 at a time? - also why am I sending more than 1 at a time? - make it wait until result  after yeild
-
-#endif
 
         if ((cws.State == WebSocketState.Closed || cws.State == WebSocketState.Closing) && wait == false)
         {
@@ -834,36 +861,27 @@ public class WebManage : MonoBehaviour
 
             if (logicWS != null) 
             {
-                GivenMapData = false;
-                StartMatchTToggle1 = false;
-                NeedToSendCharsRandomChar = false;
-                sentData = false;
-                ErrorAquired = false;
-                GetLoginID = false;
-                id = 0;
-                wait = false;
-                LoginUsername = "";
-                LoginPassword = "";
-                Username = "";
-                email = "";
-                CreateNewAccountBool = false;
-                RandomMatch = false;
-                SendMapDataBat1Bool = false;
-                GetMapDataBat1Bool = false;
-                FoundMatch = false;
-                TeamOrder = 100;
-                StaticDataMapMaker.controlObj.LoadMapDatPath = "";
-
                 StopCoroutine(logicWS);
                 StaticDataMapMaker.controlObj.LoadMain();
             }
             
-            
-            id = 0;
-            IEnumerator wtca = WaitToConnectAgain();
+            if(wtca != null){
+                StopCoroutine(wtca);
+            }
+            wtca = WaitToConnectAgain();
             StartCoroutine(wtca);
 
         }
+
+        #if !UNITY_WEBGL || UNITY_EDITOR
+        else if(cws.State == WebSocketState.Open)
+        {
+
+        cws.DispatchMessageQueue(); //handle 1 at a time? - also why am I sending more than 1 at a time? - make it wait until result  after yeild
+
+        }
+        #endif
+    
     }
 
     private async void OnApplicationQuit()
