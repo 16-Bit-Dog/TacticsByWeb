@@ -3108,8 +3108,17 @@ public class LocalMatchStart : MonoBehaviour
         if (StaticDataMapMaker.controlObj.LoadMapSaveDat)
         {
 
+            if(WebManage.WManage.MatchType == 0){
             //StaticDataMapMaker.controlObj.LoadMapSaveDat = false;
-            LoadMapStateAll();
+                LoadMapStateAll();
+
+            }
+            else if(WebManage.WManage.MatchType == 1)
+            {
+                LMS.LoadMapStateAllLogic(WebManage.WManage.JsonReceiveS.s);   
+            }
+            
+            StaticDataMapMaker.controlObj.LoadMapSaveDat = false;
         }
         else
         {

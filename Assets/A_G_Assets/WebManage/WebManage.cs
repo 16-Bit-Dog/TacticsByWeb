@@ -14,6 +14,10 @@ using System.Reflection;
 public class WebManage : MonoBehaviour
 { //use websocket 81
   //
+    public bool SendBackAndGetMapInProgress = false;
+
+    public bool fetchMapsInProgress = false;
+
     public bool MoveToWaiting = false;
     public bool TryToJoinFriend = false;
     public uint TryToJoinFriendVar = 0;
@@ -422,6 +426,34 @@ public class WebManage : MonoBehaviour
                     CreateNewAccountBool = false;
                     ///
                 }
+                else if (fetchMapsInProgress == true)
+                {
+                    cws.SendText("FMIP");
+
+                    GetMessS(JsonReceiveS);
+                    while (sentData == true) { yield return null; };
+                    
+                    cws.SendText("f");
+
+                    fetchMapsInProgress = false;
+                }
+                else if(SendBackAndGetMapInProgress == true){
+                    
+                    cws.SendText("SBAGMIP");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+                    
+                    cws.SendText(StaticDataMapMaker.controlObj.LoadMapDatPath);
+
+                    GetMessS(JsonReceiveS);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText("f");
+
+                    SendBackAndGetMapInProgress = false;
+
+                }
                 else if (RandomMatch == true)
                 {
 
@@ -768,7 +800,6 @@ public class WebManage : MonoBehaviour
                     //TODO: constant poll for usernmae to send - maybe? maybe not? - slower if I do, so I think I will just update it before a match and send it there
                     //Username = id.ToString();
                 }
-
             }
 
         }
