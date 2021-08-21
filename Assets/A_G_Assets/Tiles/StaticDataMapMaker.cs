@@ -96,16 +96,16 @@ public class StaticDataMapMaker : MonoBehaviour
 
     public void LoadBattleContinueLoad()
     {
-
-        SceneManager.LoadScene("ContinueBattleLoad");
-
+        if(WebManage.WManage.id != 0){
+            SceneManager.LoadScene("ContinueBattleLoad");
+        }
     }
 
     public void LoadLoginMenu()
     {
-
-        SceneManager.LoadScene("Login");
-
+        if(WebManage.WManage.id != 0){
+            SceneManager.LoadScene("Login");
+        }
     }
 
     public void LoadMain()

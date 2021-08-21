@@ -595,6 +595,12 @@ public class WebManage : MonoBehaviour
                     
                     cws.SendText("f");
 
+                    //Debug.Log("GotMap");
+                    GetMessS(result); // GOT team order!
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(StaticDataMapMaker.controlObj.saveMapDatString);
+
                 }
                 else if (TryToJoinFriend == true)
                 {

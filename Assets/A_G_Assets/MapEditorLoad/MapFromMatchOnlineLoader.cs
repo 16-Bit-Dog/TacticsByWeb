@@ -13,7 +13,7 @@ public class MapFromMatchOnlineLoader : MonoBehaviour
 
 	public GameObject SettingsForAllTEXT;
 
-	GameObject[] privTmp;
+	GameObject[] privTmp = new GameObject[0];
 
 	List<string> files;
 
@@ -30,7 +30,7 @@ public class MapFromMatchOnlineLoader : MonoBehaviour
 
 	void Update()
 	{
-		if(WebManage.WManage.fetchMapsInProgress == false && privTmp.Length>0)
+		if(WebManage.WManage.fetchMapsInProgress == false && privTmp.Length == 0)
 		{
 			files = JsonConvert.DeserializeObject<List<string>>(WebManage.WManage.JsonReceiveS.s);
 			Populate();
