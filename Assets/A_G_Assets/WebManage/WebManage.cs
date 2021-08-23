@@ -14,9 +14,17 @@ using System.Reflection;
 public class WebManage : MonoBehaviour
 { //use websocket 81
   //
+    public bool DeleteUploadMapData = false;
+
+    public bool UploadMapDat = false;
+
     public bool SendBackAndGetMapInProgress = false;
+    
+    public bool SendBackAndGetMapInProgressUpload = false;
 
     public bool fetchMapsInProgress = false;
+
+    public bool fetchMapsInProgressUpload = false;
 
     public bool MoveToWaiting = false;
     public bool TryToJoinFriend = false;
@@ -437,6 +445,36 @@ public class WebManage : MonoBehaviour
 
                     fetchMapsInProgress = false;
                 }
+                 else if (fetchMapsInProgressUpload == true)
+                {
+                    cws.SendText("FMPU");
+
+                    GetMessS(JsonReceiveS);
+                    while (sentData == true) { yield return null; };
+                    
+                    cws.SendText("f");
+
+                    fetchMapsInProgressUpload = false;
+                }
+                else if(SendBackAndGetMapInProgressUpload == true)
+                {
+                    
+                    cws.SendText("SBAGMPU");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+                    
+                    cws.SendText(StaticDataMapMaker.controlObj.LoadMapDatPath);
+
+                    GetMessS(JsonReceiveS);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText("f");
+
+                    SendBackAndGetMapInProgressUpload = false;
+
+                }
+
                 else if(SendBackAndGetMapInProgress == true){
                     
                     cws.SendText("SBAGMIP");
@@ -719,6 +757,52 @@ public class WebManage : MonoBehaviour
                     while (sentData == true) { yield return null; };
 
                     SendMapDataBat1Bool = false;
+                }
+                else if (DeleteUploadMapData == true)
+                {
+                    cws.SendText("DUMP");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(StaticDataMapMaker.controlObj.saveMapDatString);
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    DeleteUploadMapData = false;
+                }
+
+                else if(UploadMapDat == true)
+                {
+                    cws.SendText("UPMAP");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(StaticDataMapMaker.controlObj.saveMapDatString);
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    stringC FileDat = new stringC(File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath)); 
+
+                    cws.SendText( TeamCountGetter(FileDat).ToString() );
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText( FileDat.s.Length.ToString() );
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(FileDat.s);
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    UploadMapDat = false;
                 }
                 //else if (GetMapDataBat1Bool == true) //request map data bool
                 //{

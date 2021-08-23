@@ -22,4 +22,24 @@ public class MapNameSaverLocalM : MonoBehaviour
     {
         WebManage.WManage.TryToJoinFriend = true;
     }
+
+    IEnumerator WaitUntilUploadMapDoneThenMain()
+    {
+        while(WebManage.WManage.UploadMapDat)
+        {
+            yield return null;
+        }
+        StaticDataMapMaker.controlObj.LoadMain();
+    }
+
+    public void SendMapToUploadNet()
+    {
+        
+        WebManage.WManage.UploadMapDat = true;
+
+        IEnumerator tmpE = WaitUntilUploadMapDoneThenMain();
+
+        StartCoroutine(tmpE);
+
+    }
 }

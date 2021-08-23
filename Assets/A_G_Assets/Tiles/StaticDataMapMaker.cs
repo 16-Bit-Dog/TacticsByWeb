@@ -77,6 +77,26 @@ public class StaticDataMapMaker : MonoBehaviour
 
     }
 
+public void LoadShowOffToRemoveUploadedMap()
+{
+        SceneManager.LoadScene("ShowOffToRemoveUploadedMap");
+}
+
+    public void LoadShowOffToDeleteLocal()
+    {
+        SceneManager.LoadScene("ShowOffToDeleteLocal");
+    }
+
+    public void LoadSelectUploadedMapDelete()
+    {
+        SceneManager.LoadScene("SelectUploadedMapDelete");
+    }
+
+    public void LoadSelectDeleteLocal()
+    {
+        SceneManager.LoadScene("SelectDeleteLocal");
+    }
+
     public void LoadFriendliesGetMapName()
     {
         if(WebManage.WManage.id !=0)
@@ -98,6 +118,31 @@ public class StaticDataMapMaker : MonoBehaviour
     {
         if(WebManage.WManage.id != 0){
             SceneManager.LoadScene("ContinueBattleLoad");
+        }
+    }
+
+    public void LoadSelectUploadMap()
+    {
+        if(WebManage.WManage.id != 0)
+        {
+            SceneManager.LoadScene("SelectUploadMap");
+        }
+    }
+
+    public void LoadLastSelectNameUploadMap()
+    {
+        if(WebManage.WManage.id != 0)
+        {
+            SceneManager.LoadScene("LastSelectNameUploadMap");
+        }
+    
+    }
+
+    public void LoadPreShowUploadAcceptBackMap()
+    {
+        if(WebManage.WManage.id != 0)
+        {
+            SceneManager.LoadScene("ShowOffBackAndUploadAllow");
         }
     }
 

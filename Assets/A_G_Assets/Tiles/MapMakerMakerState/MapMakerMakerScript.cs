@@ -227,8 +227,16 @@ public class MapMakerMakerScript : MonoBehaviour
             Debug.Log("Save Load Part 2");
             StaticDataMapMaker.controlObj.LoadMapDat = false;
 
-            StaticDataMapMaker.SaveMapData data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath));
-
+            StaticDataMapMaker.SaveMapData data;
+            
+            if(StaticDataMapMaker.controlObj.LoadMapDatPath.Length<5)
+            {
+                data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(WebManage.WManage.JsonReceiveS.s);
+            }
+            else
+            {
+                data = JsonConvert.DeserializeObject<StaticDataMapMaker.SaveMapData>(File.ReadAllText(StaticDataMapMaker.controlObj.LoadMapDatPath));
+            }
             StaticDataMapMaker.controlObj.MapName = data.MapName;
             StaticDataMapMaker.controlObj.MapWidth = data.MapWidth;
             StaticDataMapMaker.controlObj.MapHeight = data.MapHeight;
