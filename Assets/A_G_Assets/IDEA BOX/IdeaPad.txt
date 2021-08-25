@@ -1,22 +1,21 @@
 
 ---------------------------------------------------------------
 TODO:
-- Map downloader
-- Map uploader
-- Friendly battle join and start match - details on email
+- add in optional condition which ends turn of player if they spend too long and timer == 0 (TLDR: make optional turn timer)
+- Map downloader comments once I have another server to moderate it
+- Map uploader show map ID for others to find the map id and use
+- continue battle ping to tell you it is your turn [checks at first connection with bool only]
 - Images of weapons in char maker
 - More weapons
 - More hats
 - Add secondary weapons
 - Balance changes
-- Async SQL server side versus now? - dunno, something more stable
 - Fix blue tint on webgl for non blue chars
 - Fix missing grid lines for webgl
 - Fix ui not stopping selection on map below (should just flag a bool saying clicking  UI
 and nothing else can pass if this var is true in bat0 and bat1 and mapMaker)
 - To stylize I will make a background image? and add shader effects? - post processing
 - Need levels of damage animations!??!?! (light, heavy, stagger [knifes], very heavy, ect?)
-- add in optional win condition which ends turn of player if they spend too long and timer == 0 (make optional turn timer)
 
 ---------------------------------------------------------------
 
