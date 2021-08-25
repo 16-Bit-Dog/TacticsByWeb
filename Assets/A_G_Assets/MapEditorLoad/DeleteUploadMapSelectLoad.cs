@@ -30,7 +30,7 @@ public class DeleteUploadMapSelectLoad : MonoBehaviour
     public void DeleteUploadedMap()
     {
         WebManage.WManage.DeleteUploadMapData = true;
-        
+
         IEnumerator tmpE = WaitToDeleteUploadMap();
 
         StartCoroutine(tmpE);
@@ -95,8 +95,6 @@ public class DeleteUploadMapSelectLoad : MonoBehaviour
 
 void Populate()
 	{
-	
-
 			privTmp = new GameObject[files.Count];
 
 			for (int i = 0; i < files.Count; i++)
@@ -116,10 +114,6 @@ void Populate()
 				privTmp[0] = Instantiate(SettingsForAllTEXT, transform);
 				privTmp[0].GetComponent<TMP_Text>().text = "start a match before you try to load a match!";
 			}
-
-
-		
-
 
 	}
 }

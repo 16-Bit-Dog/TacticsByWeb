@@ -4,15 +4,22 @@ using UnityEngine;
 using System.Text;
 using System.Threading;
 //using System.Net.WebSockets;
-using System;
-using System.IO;
 using NativeWebSocket;
 using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
+using System;
 
 public class WebManage : MonoBehaviour
 { //use websocket 81
+  //Download objects
+    public string SearchS = "";
+    public int SearchType = 0;
+    public int teamsCountForM = 2;
+    public bool searchForDownloadMap = false;
+    public bool GetMapDataForDownload = false;
+  //
+  
   //
     public bool DeleteUploadMapData = false;
 
@@ -803,6 +810,45 @@ public class WebManage : MonoBehaviour
                     while (sentData == true) { yield return null; };
 
                     UploadMapDat = false;
+                }
+
+                else if(searchForDownloadMap == true)
+                {
+                    cws.SendText("PGDMAP");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(WebManage.WManage.SearchS);
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(WebManage.WManage.teamsCountForM.ToString());
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(SearchType.ToString());
+
+                    GetMessS(JsonReceiveS);
+                    while (sentData == true) { yield return null; };
+
+                    searchForDownloadMap = false;
+                }
+                else if(GetMapDataForDownload == true)
+                {
+                    cws.SendText("GDMMAP");
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    cws.SendText(StaticDataMapMaker.controlObj.LoadMapDatPath);
+
+                    GetMessS(JsonReceiveS);
+                    while (sentData == true) { yield return null; };
+
+                    GetMapDataForDownload = false;
                 }
                 //else if (GetMapDataBat1Bool == true) //request map data bool
                 //{

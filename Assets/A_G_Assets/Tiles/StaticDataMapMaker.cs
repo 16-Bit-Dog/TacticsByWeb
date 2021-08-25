@@ -77,10 +77,33 @@ public class StaticDataMapMaker : MonoBehaviour
 
     }
 
-public void LoadShowOffToRemoveUploadedMap()
-{
-        SceneManager.LoadScene("ShowOffToRemoveUploadedMap");
-}
+
+    public void LoadDownloadSaveMapName()
+    {
+            SceneManager.LoadScene("DownloadSaveMapName");
+    }
+
+    public void LoadDownloadShowOff()
+    {
+            SceneManager.LoadScene("DownloadShowOff");
+    }
+    
+    public void LoadDownloadShowOffReset()
+    {
+        StaticDataMapMaker.controlObj.LoadMapSaveDat = true;
+
+        SceneManager.LoadScene("DownloadShowOff");
+    }
+
+    public void LoadDownloadMapBase()
+    {
+            SceneManager.LoadScene("DownloadMapBase");
+    }
+
+    public void LoadShowOffToRemoveUploadedMap()
+    {
+            SceneManager.LoadScene("ShowOffToRemoveUploadedMap");
+    }
 
     public void LoadShowOffToDeleteLocal()
     {
@@ -262,8 +285,7 @@ public void LoadShowOffToRemoveUploadedMap()
 
     public bool LoadMapSaveDat = false;//?
     public string saveMapDatString;
-    public string loadMapDatStringLocalMAtch;
-
+    public string loadMapDatStringLocalMatch; 
 
     public void PostDraw()
     {

@@ -30,11 +30,20 @@ EditorBuildSettings:
     path: Assets/Scenes/Battles/FriendBat/Create_Friend_Match/MapNameFriendlies.unity
     guid: 14b7f4625fddb0643af3908461fb49cb
   - enabled: 1
+    path: Assets/Scenes/MapMaking/DownloadMap/DownloadMapBase.unity
+    guid: 4260f51265e8f934fb65f96c664a97c4
+  - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: c39e892e9c7fef54f8e0c582a0cd4eb1
   - enabled: 1
+    path: Assets/Scenes/MapMaking/DownloadMap/DownloadShowOff.unity
+    guid: 284539da6e2190149a343731426649d7
+  - enabled: 1
     path: Assets/Scenes/MapMaking/UploadMap/LastSelectNameUploadMap.unity
     guid: 23de96e227f30414eaf9bccdc5aa8b25
+  - enabled: 1
+    path: Assets/Scenes/MapMaking/DownloadMap/DownloadSaveMapName.unity
+    guid: e4a0fb2ea2e9d714f8c4d04d629f74e7
   - enabled: 1
     path: Assets/Scenes/MapMaking/MapMaker_Maker.unity
     guid: c9ecbf8f2531ae84e8034d5b05b5e931

@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1728719299}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.5150001
+  m_Size: 0.51500005
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2459,8 +2459,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1833177407}
   m_HandleRect: {fileID: 1833177406}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.41500002
+  m_Value: 1.0000001
+  m_Size: 0.415
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3407,7 +3407,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8477888761082844147, guid: 780b663524c08844f80cfd6839ce1c50, type: 3}
         m_TargetAssemblyTypeName: StaticDataMapMaker, Assembly-CSharp
-        m_MethodName: LoadMain
+        m_MethodName: LoadLocalMatchMapSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3990,8 +3990,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1160094002}
   m_HandleRect: {fileID: 1160094001}
   m_Direction: 0
-  m_Value: -0.00000007318363
-  m_Size: 0.30499998
+  m_Value: -0.00000007318365
+  m_Size: 0.30500004
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

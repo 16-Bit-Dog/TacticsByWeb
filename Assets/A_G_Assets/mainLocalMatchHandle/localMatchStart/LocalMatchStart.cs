@@ -18,8 +18,10 @@ public class LocalMatchStart : MonoBehaviour
     public void BackToMainMenuAndSave()
     {
         
-        LMS.SaveMapStateAll();
-        
+        if (WebManage.WManage.MatchType == 0) 
+        {
+            LMS.SaveMapStateAll();
+        }
   //      Destroy(localMatchIntermediateCS.LMICS);
 
         localMatchIntermediateCS.LMICS = null;
@@ -598,6 +600,53 @@ Debug.Log(data.TeamCount);
             Debug.Log("teamCount is:"+ LMS.TeamCount.ToString());
         }
         
+                    //Window State vars
+            if (WebManage.WManage.MatchType == 0)
+            {
+                LMS.HoverInfo.SetActive(data.IsHoverInfoActive);
+                LMS.HoverInfoCloseButton.SetActive(data.IsHoverInfoCloseButtonActive);
+                LMS.ActionMenuObj.SetActive(data.IsActionMenuObjActive);
+                LMS.CloseActionMenuObj.SetActive(data.IsCloseActionMenuObjActive);
+                LMS.CloseActionAtkObj.SetActive(data.IsCloseActionAtkObjActive);
+                LMS.ActionAbilityInfoObj.SetActive(data.IsActionAbilityInfoObjActive);
+                LMS.CloseActionAbilityObj.SetActive(data.IsCloseActionAbilityObjActive);
+                LMS.Attack1.SetActive(data.IsAttack1Active);
+                LMS.Attack2.SetActive(data.AIsttack2Active);
+                LMS.Ability1.SetActive(data.IsAbility1Active);
+                LMS.Ability2.SetActive(data.IsAbility2Active);
+                LMS.Move.SetActive(data.IsMoveActive);
+                LMS.TileInfoObj.SetActive(data.IsTileInfoObjActive);
+                LMS.TileInfoToggle.SetActive(data.IsTileInfoToggleActive);
+                LMS.AttackPrepScreenAttacker.SetActive(data.IsAttackPrepScreenAttackerActive);
+                LMS.AttackPrepScreenDefender.SetActive(data.IsAttackPrepScreenDefenderActive);
+                LMS.StartToAttackButton.SetActive(data.IsStartToAttackButtonActive);
+                LMS.CloseActionRotateObjBackButton.SetActive(data.IsCloseActionRotateObjBackButtonActive);
+                LMS.WinConditionObj.SetActive(data.IsWinConditionObjActive);
+            }
+            else if(WebManage.WManage.MatchType == 1 && TeamOrderSameAsCurrentTurn() == false)
+            {
+                    //LMS.HoverInfo.SetActive(false);
+                    //LMS.HoverInfoCloseButton.SetActive(data.IsHoverInfoCloseButtonActive);
+                    LMS.ActionMenuObj.SetActive(false);
+                    LMS.CloseActionMenuObj.SetActive(false);
+                    LMS.CloseActionAtkObj.SetActive(false);
+                    LMS.ActionAbilityInfoObj.SetActive(false);
+                    LMS.CloseActionAbilityObj.SetActive(false);
+                    LMS.Attack1.SetActive(false);
+                    LMS.Attack2.SetActive(false);
+                    LMS.Ability1.SetActive(false);
+                    LMS.Ability2.SetActive(false);
+                    LMS.Move.SetActive(false);
+                    //LMS.TileInfoObj.SetActive();
+                    //LMS.TileInfoToggle.SetActive(data.IsTileInfoToggleActive);
+                    LMS.AttackPrepScreenAttacker.SetActive(false);
+                    LMS.AttackPrepScreenDefender.SetActive(false);
+                    LMS.StartToAttackButton.SetActive(false);
+                    LMS.CloseActionRotateObjBackButton.SetActive(false);
+                    //LMS.WinConditionObj.SetActive(data.IsWinConditionObjActive);
+                
+            }
+
     }
 
     public void LoadMapStateAll() //todo: load match var has a problem with menu's if already open or smthing and closing the OG action menu - only problem that exists

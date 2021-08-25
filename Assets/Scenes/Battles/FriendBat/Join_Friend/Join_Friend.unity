@@ -1001,7 +1001,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8477888761082844147, guid: 780b663524c08844f80cfd6839ce1c50, type: 3}
         m_TargetAssemblyTypeName: StaticDataMapMaker, Assembly-CSharp
-        m_MethodName: LoadMain
+        m_MethodName: LoadFriendliesBattleTypes
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

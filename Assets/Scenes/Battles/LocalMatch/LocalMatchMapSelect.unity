@@ -1014,7 +1014,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2099803907}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.1615
+  m_Size: 0.16149999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1142,7 +1142,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8477888761082844147, guid: 780b663524c08844f80cfd6839ce1c50, type: 3}
         m_TargetAssemblyTypeName: StaticDataMapMaker, Assembly-CSharp
-        m_MethodName: LoadMain
+        m_MethodName: LoadBattleChoices
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1458,7 +1458,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1803426465}
   m_HandleRect: {fileID: 1803426464}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
