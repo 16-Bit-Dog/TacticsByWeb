@@ -199,6 +199,8 @@ public class LocalMatchStart : MonoBehaviour
 
     public string SaveMapStateAllLogic()
     {
+        Debug.Log("saved map Data");
+
         FileInfo fileInfo = new FileInfo(Application.persistentDataPath
                      + "/MapsLocalSave/");
 
@@ -225,7 +227,7 @@ public class LocalMatchStart : MonoBehaviour
         data.currentTurn = LMS.currentTurn;
         data.CurrentTeamTurn = LMS.CurrentTeamTurn;
 
-Debug.Log(LMS.TeamCount);
+        //Debug.Log(LMS.TeamCount);
         data.TeamCount = LMS.TeamCount;
         data.MonumentValBlue = LMS.MonumentValBlue;
         data.MonumentValRed = LMS.MonumentValRed;
@@ -321,6 +323,7 @@ Debug.Log(LMS.TeamCount);
         LoadCharInfoLocalMatchStart(localMatchIntermediateCS.LMICS.greenC, data.GreenChar);
         LoadCharInfoLocalMatchStart(localMatchIntermediateCS.LMICS.purpleC, data.PurpleChar);
 
+        //Debug.Log("Saved map: "+JsonConvert.SerializeObject(data));
         return JsonConvert.SerializeObject(data);
     }
 
@@ -334,7 +337,7 @@ Debug.Log(LMS.TeamCount);
     {
         for (int i = 0; i < CharDataIn.Count; i++)
         {
-            Debug.Log("Char Passed Load Into: " + i.ToString());
+            //Debug.Log("Char Passed Load Into: " + i.ToString());
 
             localMatchIntermediateCS.CharDat tmp = new localMatchIntermediateCS.CharDat();
 
@@ -415,6 +418,12 @@ Debug.Log(LMS.TeamCount);
 
     }
 
+    public void KillOBJ(GameObject g){
+        if(g!=null){
+            Destroy(g);
+        }
+    }
+
     public void DeleteCharArray(List<localMatchIntermediateCS.CharDat> CharData)
     {
 
@@ -422,14 +431,13 @@ Debug.Log(LMS.TeamCount);
         {
             if (CharData[i] != null)
             {
-                if (CharData[i].CharObj != null)
-                {
-                    Destroy(CharData[i].CharObj);
-                    Destroy(CharData[i].HatObj);
-                    Destroy(CharData[i].WeaponObj);
-                    Destroy(CharData[i].HealthBar);
-                    Destroy(CharData[i].HealthBarBackLine);
-                }
+                
+                    KillOBJ(CharData[i].CharObj);
+                    KillOBJ(CharData[i].HatObj);
+                    KillOBJ(CharData[i].WeaponObj);
+                    KillOBJ(CharData[i].HealthBar);
+                    KillOBJ(CharData[i].HealthBarBackLine);
+                
             }
         }
         CharData.Clear();
@@ -460,7 +468,7 @@ Debug.Log(LMS.TeamCount);
 
                 //localMatchIntermediateCS.LMICS.TilesArray[i][ii] = new localMatchIntermediateCS.MapMakerVarsDat();
                 //localMatchIntermediateCS.LMICS.TilesArray[i][ii].TileId = data.TilesArray[i][ii].TileId;
-                Destroy(localMatchIntermediateCS.LMICS.TilesArray[i][ii].Tile); // = Instantiate(TileLookUp.TLU.Tiles[localMatchIntermediateCS.LMICS.TilesArray[i][ii].TileId].Obj, new Vector3(4 * ii, -20, 4 * i), Quaternion.identity);
+                KillOBJ(localMatchIntermediateCS.LMICS.TilesArray[i][ii].Tile); // = Instantiate(TileLookUp.TLU.Tiles[localMatchIntermediateCS.LMICS.TilesArray[i][ii].TileId].Obj, new Vector3(4 * ii, -20, 4 * i), Quaternion.identity);
                 //localMatchIntermediateCS.LMICS.TilesArray[i].CDat[CharDat.y][CharDat.x] = CharDat <-- use selected char pos to also then get Cdat
             }
         }
@@ -472,6 +480,9 @@ Debug.Log(LMS.TeamCount);
 
     public void LoadMapStateAllLogic(string JsonString)
     {
+                Debug.Log("Loaded map Data");
+
+        //Debug.Log("Loaded Map: "+JsonString);
         localMatchIntermediateCS.LocalMatchSaveMapData data = JsonConvert.DeserializeObject<localMatchIntermediateCS.LocalMatchSaveMapData>(JsonString);
 
         if (data != null)
@@ -499,7 +510,7 @@ Debug.Log(LMS.TeamCount);
             LMS.CurrentTeamTurn = data.CurrentTeamTurn;
             LMS.ifLoopTurnTextFix();
 
-Debug.Log(data.TeamCount);
+            //Debug.Log(data.TeamCount);
             LMS.TeamCount = data.TeamCount;
             LMS.MonumentValBlue = data.MonumentValBlue;
             LMS.MonumentValRed = data.MonumentValRed;
@@ -547,23 +558,24 @@ Debug.Log(data.TeamCount);
             }
 
         //load chars with items and material into group and dictionary
-        try
-        {
+        //try
+        //{
             LoadCharsInto(localMatchIntermediateCS.LMICS.blueC, data.BlueChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.redC, data.RedChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.yellowC, data.YellowChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.greenC, data.GreenChar);
             LoadCharsInto(localMatchIntermediateCS.LMICS.purpleC, data.PurpleChar);
-        }
-        catch { Debug.Log("Failed to Load CharData into arrays - map:\n"+ JsonString); }
-        try { 
+        //}
+        //catch { Debug.Log("Failed to Load CharData into arrays - map:\n"+ JsonString); }
+        //try { 
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.blueC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.redC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.yellowC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.greenC, localMatchIntermediateCS.LMICS.TilesArray);
             LoadCharGroupIntoMap(localMatchIntermediateCS.LMICS.purpleC, localMatchIntermediateCS.LMICS.TilesArray);
-        }
-        catch { Debug.Log("Failed to Load CharData into map - map:\n"+ JsonString); }
+        //}
+        //catch { Debug.Log("Failed to Load CharData into map - map:\n"+ JsonString); }
+
 
             try
             {
@@ -588,7 +600,7 @@ Debug.Log(data.TeamCount);
         }
 
         if(LMS.TeamCount == 0 || LMS.TeamCount == null){
-            Debug.Log("teamCount works?");
+            //Debug.Log("teamCount works?");
 
             LMS.TeamCount = 0;
             if(localMatchIntermediateCS.LMICS.blueC.Count != 0) { LMS.TeamCount += 1; }
@@ -597,7 +609,7 @@ Debug.Log(data.TeamCount);
             if (localMatchIntermediateCS.LMICS.greenC.Count != 0) {  LMS.TeamCount += 1; }
             if (localMatchIntermediateCS.LMICS.purpleC.Count != 0) {  LMS.TeamCount += 1; }
             
-            Debug.Log("teamCount is:"+ LMS.TeamCount.ToString());
+            //Debug.Log("teamCount is:"+ LMS.TeamCount.ToString());
         }
         
                     //Window State vars
@@ -661,7 +673,7 @@ Debug.Log(data.TeamCount);
 
     public bool CheckToLoadMapFromWeb()
     {
-        if (WebManage.WManage.GivenMapData)
+        if (WebManage.WManage.GivenMapData) //does c# auto cast non 0 into bool?
         {
             return true;// not retunr given map dat incase I need extra logic...
         }
@@ -787,9 +799,10 @@ Debug.Log(data.TeamCount);
         LMS.SelectedChar.HasTurn = false;
         LMS.SelectedChar.MovedAlready = true;
 
+        LMS.SelectedChar = null;
+
         LMS.CloseActionMenuAndDeselect();
 
-        LMS.SelectedChar = null;
 
     }
 
@@ -798,7 +811,7 @@ Debug.Log(data.TeamCount);
         foreach (Tuple<int, int> i in LMS.TmpAtkTiles.Keys)
         {
 
-            Destroy(LMS.TmpAtkTiles[i]);
+            KillOBJ(LMS.TmpAtkTiles[i]);
 
         }
         LMS.TmpAtkTiles.Clear();
@@ -1295,8 +1308,6 @@ Debug.Log(data.TeamCount);
         if (LMS.currentlyFighting == false) //only work once fighting anim is done
         {
 
-            CloseActionMenuAndDeselect();
-
             Renderer[] ComponentR;
             if (LMS.CurrentTeamTurn == 1)
             {
@@ -1453,6 +1464,10 @@ Debug.Log(data.TeamCount);
 
             LMS.currentTurn += 1;
 
+            LMS.SelectedChar = null;
+
+            CloseActionMenuAndDeselect();
+
             LMS.startTurnFunctionOrder[LMS.currentTurn % LMS.TeamCount]();
 
             LMS.TurnCountText.text = "" + (((LMS.currentTurn - 1) / LMS.TeamCount));
@@ -1469,6 +1484,8 @@ Debug.Log(data.TeamCount);
                 {
                     WebManage.WManage.SendMapDataBat1Bool = false;
                 }
+                Debug.Log("Sent New Turn Map");
+                
                 SendMapDataNetworkBat1();
             }
         }
@@ -1491,6 +1508,7 @@ Debug.Log(data.TeamCount);
         {
             if (TeamOrderSameAsCurrentTurn())
             {
+                Debug.Log("NewTurn");
                 NewTurnLogicBat0();
             }
         } // bat type 1
@@ -1942,10 +1960,11 @@ Debug.Log(data.TeamCount);
         LMS.SelectedChar.MovedAlready = true;
         
         LMS.currentlyFighting = true;
-        
-        LMS.CloseActionMenuAndDeselect();
 
         LMS.SelectedChar = null;
+
+        LMS.CloseActionMenuAndDeselect();
+
 
     
 
@@ -2273,7 +2292,7 @@ Debug.Log(data.TeamCount);
 
         }
 
-        else if (LMS.SelectedChar != null && LMS.SelectedChar.MovedAlready == true && LMS.SelectedChar.HasTurn == true && LMS.attackPrep == false)
+        else if (LMS.SelectedChar != null && LMS.SelectedChar.CharObj != null && LMS.SelectedChar.MovedAlready == true && LMS.SelectedChar.HasTurn == true && LMS.attackPrep == false)
         {
             if (SelectedChar.CharObj.GetComponent<Animator>().GetBool("Selected") == false)
             {
@@ -2931,6 +2950,7 @@ Debug.Log(data.TeamCount);
     {
         if (CharData.Dead == false)
         {
+            Debug.Log("loadedChar");
             CharData.CharObj = Instantiate(ConstantCharObject.CCObj.CharObjConstant, new Vector3(4 * CharData.PosX, -19, 4 * CharData.PosY), Quaternion.identity);
             CharData.HatObj = Instantiate(HatLookup.HLO.Hat[CharData.CH], new Vector3(0, 0, 0), Quaternion.identity);
 
@@ -3022,6 +3042,9 @@ Debug.Log(data.TeamCount);
             {
                 localMatchIntermediateCS.LMICS.ChooseAndSetAnim(SecWLookup.SWLO.MainAnimNum[CharData.SW], CharData.anim);
             }
+        }
+        else{
+            Debug.Log("DeadChar");
         }
     }
     
@@ -3349,13 +3372,22 @@ Debug.Log(data.TeamCount);
 
     void matchType1Logic()
     {
+
+/*
+           for(int i = 0; i < localMatchIntermediateCS.LMICS.yellowC.Count; i++){
+                if(localMatchIntermediateCS.LMICS.TilesArray[localMatchIntermediateCS.LMICS.yellowC[i].PosY][localMatchIntermediateCS.LMICS.yellowC[i].PosX].CDat.CharObj == null){Debug.Log("FUCKK IT FAILED");}
+            }
+            for(int i = 0; i < localMatchIntermediateCS.LMICS.blueC.Count; i++){
+                if(localMatchIntermediateCS.LMICS.TilesArray[localMatchIntermediateCS.LMICS.blueC[i].PosY][localMatchIntermediateCS.LMICS.blueC[i].PosX].CDat.CharObj == null){Debug.Log("FUCKK IT FAILED");}
+            }
+*/
+
         //Debug.Log(LMS.currentTurn);
         if (TeamOrderSameAsCurrentTurn())
         {
-
+            if(CheckToLoadMapFromWeb()){ WebManage.WManage.GivenMapData = false;}
         }
         else{
-            //CheckAndLoadWebMapBat1();
             CheckAndLoadWebMapALLBat1();
         }
 
@@ -3413,13 +3445,15 @@ Debug.Log(data.TeamCount);
                     {
                         if (localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat != null && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.Dead == false && LMS.CurrentTeamTurn == localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.team && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.HasTurn == true)
                         { //double barrier check for 'just in case'
-                            BasicSendMapDataSTBlocker();
+
+                            Debug.Log("Y pos: "+ CYPos.ToString()+" : X pos: "+CXPos.ToString());
 
                             Renderer[] ComponentR;
 
-                            if (SelectedChar != null)
+                            if (SelectedChar != null && SelectedChar.CharObj != null)
                             {
 
+                                //if(LMS.SelectedChar.CharObj == null){Debug.Log("no Char Obj");}
                                 ComponentR = LMS.SelectedChar.CharObj.GetComponentsInChildren<Renderer>();
                                 for (int i = 0; i < ComponentR.GetLength(0); i++)
                                 {
@@ -3439,6 +3473,8 @@ Debug.Log(data.TeamCount);
                             {
                                 SelectedChar.CharObj.GetComponent<Animator>().SetBool("Selected", true);
                             }
+
+                            BasicSendMapDataSTBlocker();
 
                         }
 
