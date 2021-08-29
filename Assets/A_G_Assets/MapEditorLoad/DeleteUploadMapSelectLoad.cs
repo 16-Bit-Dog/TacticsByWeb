@@ -95,6 +95,8 @@ public class DeleteUploadMapSelectLoad : MonoBehaviour
 
 void Populate()
 	{
+	
+
 			privTmp = new GameObject[files.Count];
 
 			for (int i = 0; i < files.Count; i++)

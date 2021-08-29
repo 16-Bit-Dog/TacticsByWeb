@@ -14,6 +14,20 @@ using System.Reflection;
 public class LocalMatchStart : MonoBehaviour
 {
 
+    IEnumerator WaitTillGetMapDataForDownloadDone(){
+        while(WebManage.WManage.GetMapDataForDownload){yield return null;}
+        
+        CheckAndLoadWebMapALLBat1NOSET();
+    }
+
+    public void FetchMapReloadButton()
+    {
+
+        WebManage.WManage.GetMapDataForDownload = true;
+
+        IEnumerator tmp = WaitTillGetMapDataForDownloadDone(); 
+        StartCoroutine(tmp);
+    }
 
     public void BackToMainMenuAndSave()
     {
@@ -91,12 +105,15 @@ public class LocalMatchStart : MonoBehaviour
         }
     }
 
+
     List<Action> TSAFuncs = new List<Action>();
 
     LineDrawer ArrowLineDrawer;
 
 
     public LocalMatchStart LMS;
+
+    public GameObject ReloadMapB;
 
     public bool SetYourColorThing = false;
 
@@ -480,7 +497,7 @@ public class LocalMatchStart : MonoBehaviour
 
     public void LoadMapStateAllLogic(string JsonString)
     {
-                Debug.Log("Loaded map Data");
+        Debug.Log("Loaded map Data");
 
         //Debug.Log("Loaded Map: "+JsonString);
         localMatchIntermediateCS.LocalMatchSaveMapData data = JsonConvert.DeserializeObject<localMatchIntermediateCS.LocalMatchSaveMapData>(JsonString);
@@ -690,6 +707,16 @@ public class LocalMatchStart : MonoBehaviour
             WebManage.WManage.GivenMapData = false;
             LoadMapStateBat1();
         }
+    }
+
+    public void CheckAndLoadWebMapALLBat1NOSET(){
+
+        WebManage.WManage.GivenMapData = false;
+        LMS.DeleteMapLogic();
+        LMS.DeleteAllCharArraysLogic();
+        LMS.DeleteAllTmpTiles();
+
+        LMS.LoadMapStateBat1();
     }
 
     public void CheckAndLoadWebMapALLBat1()
@@ -3385,10 +3412,13 @@ public class LocalMatchStart : MonoBehaviour
         //Debug.Log(LMS.currentTurn);
         if (TeamOrderSameAsCurrentTurn())
         {
+            ReloadMapB.SetActive(false);
             if(CheckToLoadMapFromWeb()){ WebManage.WManage.GivenMapData = false;}
         }
         else{
             CheckAndLoadWebMapALLBat1();
+
+            ReloadMapB.SetActive(true);
         }
 
         if (localMatchIntermediateCS.LMICS != null)
