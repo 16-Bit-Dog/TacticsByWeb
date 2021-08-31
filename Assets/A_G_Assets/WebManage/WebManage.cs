@@ -463,7 +463,7 @@ public class WebManage : MonoBehaviour
 
                     fetchMapsInProgressUpload = false;
                 }
-                else if(SendBackAndGetMapInProgressUpload == true)
+                else if(SendBackAndGetMapInProgressUpload == true) //continue battle
                 {
                     
                     cws.SendText("SBAGMPU");
@@ -490,6 +490,13 @@ public class WebManage : MonoBehaviour
                     while (sentData == true) { yield return null; };
                     
                     cws.SendText(StaticDataMapMaker.controlObj.LoadMapDatPath);
+
+                    GetMessS(result);
+                    while (sentData == true) { yield return null; };
+
+                    TeamOrder = UInt32.Parse(result.s);
+
+                    cws.SendText("f");
 
                     GetMessS(JsonReceiveS);
                     while (sentData == true) { yield return null; };

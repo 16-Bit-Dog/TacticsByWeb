@@ -15,7 +15,7 @@ public class LocalMatchStart : MonoBehaviour
 {
 
     IEnumerator WaitTillGetMapDataForDownloadDone(){
-        while(WebManage.WManage.GetMapDataForDownload){yield return null;}
+        while(WebManage.WManage.SendBackAndGetMapInProgress){yield return null;}
         
         CheckAndLoadWebMapALLBat1NOSET();
     }
@@ -23,7 +23,7 @@ public class LocalMatchStart : MonoBehaviour
     public void FetchMapReloadButton()
     {
 
-        WebManage.WManage.GetMapDataForDownload = true;
+        WebManage.WManage.SendBackAndGetMapInProgress = true;
 
         IEnumerator tmp = WaitTillGetMapDataForDownloadDone(); 
         StartCoroutine(tmp);
@@ -3412,13 +3412,13 @@ public class LocalMatchStart : MonoBehaviour
         //Debug.Log(LMS.currentTurn);
         if (TeamOrderSameAsCurrentTurn())
         {
-            ReloadMapB.SetActive(false);
+            LMS.ReloadMapB.SetActive(false);
             if(CheckToLoadMapFromWeb()){ WebManage.WManage.GivenMapData = false;}
         }
         else{
             CheckAndLoadWebMapALLBat1();
 
-            ReloadMapB.SetActive(true);
+            LMS.ReloadMapB.SetActive(true);
         }
 
         if (localMatchIntermediateCS.LMICS != null)
