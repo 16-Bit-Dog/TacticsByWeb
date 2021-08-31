@@ -499,7 +499,7 @@ public class LocalMatchStart : MonoBehaviour
     {
         Debug.Log("Loaded map Data");
 
-        //Debug.Log("Loaded Map: "+JsonString);
+        Debug.Log("Loaded Map: "+JsonString);
         localMatchIntermediateCS.LocalMatchSaveMapData data = JsonConvert.DeserializeObject<localMatchIntermediateCS.LocalMatchSaveMapData>(JsonString);
 
         if (data != null)
@@ -560,6 +560,10 @@ public class LocalMatchStart : MonoBehaviour
         }
 
             //load map
+            
+            //Debug.Log(data.TilesArray);
+            Debug.Log(data.SaveMapName);
+            
             localMatchIntermediateCS.LMICS.TilesArray = new localMatchIntermediateCS.MapMakerVarsDat[data.TilesArray.GetLength(0)][];
             for (int i = 0; i < data.TilesArray.GetLength(0); i++)
             {
@@ -826,6 +830,7 @@ public class LocalMatchStart : MonoBehaviour
         LMS.SelectedChar.HasTurn = false;
         LMS.SelectedChar.MovedAlready = true;
 
+        
         LMS.SelectedChar = null;
 
         LMS.CloseActionMenuAndDeselect();
@@ -3144,6 +3149,7 @@ public class LocalMatchStart : MonoBehaviour
         if (StaticDataMapMaker.controlObj.LoadMapSaveDat == true)
         {
             StaticDataMapMaker.controlObj.LoadMapSaveDat = false;
+            Debug.Log("end load");
         }
         else
         {
@@ -3189,7 +3195,7 @@ public class LocalMatchStart : MonoBehaviour
                 LMS.LoadMapStateAllLogic(WebManage.WManage.JsonReceiveS.s);   
             }
 
-            StaticDataMapMaker.controlObj.LoadMapSaveDat = false;
+            //StaticDataMapMaker.controlObj.LoadMapSaveDat = false;
         }
         else
         {
@@ -3283,8 +3289,15 @@ public class LocalMatchStart : MonoBehaviour
             {
                 if (Input.GetMouseButton(0))
                 {
+                    /*
+                    if(localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat != null){
+                        Debug.Log(localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.HasTurn);
+                    }
+                    */
+
                     if (localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat != null && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.Dead == false && LMS.CurrentTeamTurn == localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.team && localMatchIntermediateCS.LMICS.TilesArray[CYPos][CXPos].CDat.HasTurn == true)
                     { //double barrier check for 'just in case'
+                        //Debug.Log("Y pos: "+ CYPos.ToString()+" : X pos: "+CXPos.ToString());
 
                         Renderer[] ComponentR;
 
@@ -3366,7 +3379,7 @@ public class LocalMatchStart : MonoBehaviour
             else if (LMS.MovePhase.MovePhase == 5)
             {
 
-                if (SelectedChar.HasTurn == false)
+                if (LMS.SelectedChar.HasTurn == false)
                 {
                     CloseActionMenuAndDeselect();
                     Debug.Log("yeay");
