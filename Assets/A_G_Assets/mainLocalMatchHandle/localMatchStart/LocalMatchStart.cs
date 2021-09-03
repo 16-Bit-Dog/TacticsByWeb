@@ -22,11 +22,13 @@ public class LocalMatchStart : MonoBehaviour
 
     public void FetchMapReloadButton()
     {
-
+        if(WebManage.WManage.MatchType == 1 && WebManage.WManage.continueBat == true){
+            
         WebManage.WManage.SendBackAndGetMapInProgress = true;
 
         IEnumerator tmp = WaitTillGetMapDataForDownloadDone(); 
         StartCoroutine(tmp);
+        }
     }
 
     public void BackToMainMenuAndSave()
@@ -563,7 +565,7 @@ public class LocalMatchStart : MonoBehaviour
             
             //Debug.Log(data.TilesArray);
             Debug.Log(data.SaveMapName);
-            
+
             localMatchIntermediateCS.LMICS.TilesArray = new localMatchIntermediateCS.MapMakerVarsDat[data.TilesArray.GetLength(0)][];
             for (int i = 0; i < data.TilesArray.GetLength(0); i++)
             {

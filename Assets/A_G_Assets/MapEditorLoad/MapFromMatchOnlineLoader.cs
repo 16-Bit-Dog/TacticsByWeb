@@ -46,9 +46,11 @@ public class MapFromMatchOnlineLoader : MonoBehaviour
 
 		StaticDataMapMaker.controlObj.LoadMapSaveDat = true;
 		
+		WebManage.WManage.continueBat = true;
+
 		WebManage.WManage.MatchType = 1;
 
-		SceneManager.LoadScene("LocalMatchStart"); //loads map
+		SceneManager.LoadScene("BattleType1StartTrue"); //loads map
 		
 	}
 

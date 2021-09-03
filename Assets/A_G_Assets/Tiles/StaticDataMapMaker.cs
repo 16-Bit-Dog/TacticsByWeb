@@ -179,7 +179,7 @@ public class StaticDataMapMaker : MonoBehaviour
     public void LoadMain()
     {
         WebManage.WManage.FoundMatch = false;
-
+        WebManage.WManage.ResetVarsNotID();
         SceneManager.LoadScene("Main");
 
     }
@@ -216,9 +216,7 @@ public class StaticDataMapMaker : MonoBehaviour
 
     public void LoadMainClearRandomMatch()
     {
-        WebManage.WManage.FoundMatch = false;
-        WebManage.WManage.StartMatchTToggle1 = false;
-        WebManage.WManage.FoundMatch = false;
+        WebManage.WManage.ResetVarsNotID();
         StaticDataMapMaker.controlObj.LoadMapDatPath = "";
 
         SceneManager.LoadScene("Main");

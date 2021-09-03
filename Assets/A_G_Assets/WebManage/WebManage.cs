@@ -20,6 +20,7 @@ public class WebManage : MonoBehaviour
     public bool GetMapDataForDownload = false;
   //
   
+    public bool continueBat = false;
   //
     public bool DeleteUploadMapData = false;
 
@@ -980,30 +981,50 @@ public class WebManage : MonoBehaviour
         {
             StopCoroutine(logicWS);
 
-            GivenMapData = false;
-            StartMatchTToggle1 = false;
-            NeedToSendCharsRandomChar = false;
-            sentData = false;
-            ErrorAquired = false;
-            GetLoginID = false;
-            id = 0;
-            wait = false;
             LoginUsername = "";
             LoginPassword = "";
             Username = "";
             email = "";
-            CreateNewAccountBool = false;
-            RandomMatch = false;
-            SendMapDataBat1Bool = false;
-            GetMapDataBat1Bool = false;
-            FoundMatch = false;
-            TeamOrder = 100;
-            StaticDataMapMaker.controlObj.LoadMapDatPath = "";
+            id = 0;
+            sentData = false;
+            ResetVarsNotID();
         };
 
         cws.Connect();//may need await
 
     }
+    
+    public void ResetVarsNotID()
+    {
+        JsonReceiveS.s = "";
+        SearchS = "";
+        SearchType = 0;
+        searchForDownloadMap = false;
+        GetMapDataForDownload = false;
+        TryToJoinFriendVar = 0;
+        TryToJoinFriend = false;
+        MoveToWaiting = false;
+        fetchMapsInProgressUpload = false;
+        fetchMapsInProgress = false;
+        SendBackAndGetMapInProgressUpload = false;
+        SendBackAndGetMapInProgress = false;
+        UploadMapDat = false;
+        DeleteUploadMapData = false;
+        continueBat = false;
+        GivenMapData = false;
+        StartMatchTToggle1 = false;
+        NeedToSendCharsRandomChar = false;
+        ErrorAquired = false;
+        GetLoginID = false;
+        wait = false;
+        CreateNewAccountBool = false;
+        RandomMatch = false;
+        SendMapDataBat1Bool = false;
+        GetMapDataBat1Bool = false;
+        FoundMatch = false;
+        TeamOrder = 100;
+        StaticDataMapMaker.controlObj.LoadMapDatPath = "";
+    } 
 
     IEnumerator WaitToConnectAgain()
     {
